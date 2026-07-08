@@ -52,7 +52,7 @@ app.get('/api/nibgate/access', (req, res) => {
 
 // Admin API to toggle gating
 app.post('/api/admin/update-gate', (req, res) => {
-    const { id, access, password } = req.body;
+    const { id, access, price, password } = req.body;
     if (password !== 'admin123') return res.status(403).send('Forbidden');
     
     const filePath = path.join(__dirname, 'nibgate.json');
@@ -64,6 +64,9 @@ app.post('/api/admin/update-gate', (req, res) => {
         resource.access = resource.access || {};
         resource.access.humans = access;
         resource.access.agents = access;
+        if (price !== undefined && price !== null) {
+            resource.price = String(price);
+        }
         fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
         return res.json({ success: true });
     }

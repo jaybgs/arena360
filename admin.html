@@ -7,14 +7,81 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
     <style>
-        .admin-container {
-            max-width: 1000px;
-            margin: 40px auto;
+        .admin-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
             padding: 20px;
-            background: var(--bg-card);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
+        
+        .login-card {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-card h2 {
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .login-card p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+        
+        .login-input:focus {
+            border-color: var(--primary-color);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        .admin-container {
+            display: none;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -23,38 +90,82 @@
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
         }
+        
         .admin-table {
             width: 100%;
             border-collapse: collapse;
         }
+        
         .admin-table th, .admin-table td {
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
+        
         .admin-table th {
             font-family: 'Outfit', sans-serif;
             font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
+        
         .admin-table td {
             font-family: 'Inter', sans-serif;
+            vertical-align: middle;
         }
+        
         .article-title {
             font-weight: 600;
             color: var(--text-color);
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        .toggle-btn {
+        
+        .price-input {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-color);
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            text-align: right;
+            margin-right: 5px;
+        }
+        
+        .price-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .action-container {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
             padding: 8px 16px;
-            border-radius: 20px;
+            border-radius: 6px;
             border: none;
             cursor: pointer;
             font-weight: 600;
             font-size: 0.85rem;
             transition: all 0.2s ease;
         }
+        
+        .save-btn {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .toggle-btn {
+            flex-grow: 1;
+        }
+        
         .btn-gated {
             background: #ff4757;
             color: white;
@@ -63,8 +174,27 @@
             background: #2ed573;
             color: white;
         }
-        .toggle-btn:hover {
-            transform: scale(1.05);
+        
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .badge-free {
+            background: rgba(46, 213, 115, 0.15);
+            color: #2ed573;
+        }
+
+        .badge-gated {
+            background: rgba(255, 71, 87, 0.15);
+            color: #ff4757;
         }
     </style>
 </head>
@@ -75,10 +205,26 @@
             <li><a href="index.html">Back to Home</a></li>
         </ul>
     </nav>
-    <div class="admin-container">
+    
+    <div class="admin-wrapper" id="loginWrapper">
+        <div class="login-card">
+            <h2>Admin Login</h2>
+            <p>Enter your password to access the control panel.</p>
+            <form id="loginForm">
+                <input type="password" id="adminPassword" class="login-input" placeholder="Password" required>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <p id="loginError" style="color:#ff4757; margin-top:15px; display:none;">Incorrect password.</p>
+        </div>
+    </div>
+
+    <div class="admin-container" id="adminPanel">
         <div class="admin-header">
-            <h2>Manage Content Gating</h2>
-            <p>Toggle which articles require payment via Nibgate.</p>
+            <div>
+                <h2>Manage Content Gating</h2>
+                <p style="color: var(--text-muted); margin-top: 5px;">Configure access rules and prices for all articles.</p>
+            </div>
+            <button id="logoutBtn" class="action-btn" style="background:var(--bg-color); color:var(--text-color); border:1px solid var(--border-color);">Logout</button>
         </div>
         <table class="admin-table">
             <thead>
@@ -86,9 +232,9 @@
                     <th>ID</th>
                     <th>Title</th>
                     <th>Category</th>
-                    <th>Price</th>
-                    <th>Access Status</th>
-                    <th>Action</th>
+                    <th>Status</th>
+                    <th>Price (USDC)</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="adminTableBody">
@@ -96,6 +242,7 @@
             </tbody>
         </table>
     </div>
+    
     <script type="module" src="admin.js"></script>
 </body>
 </html>

@@ -1,11 +1,47 @@
-document.addEventListener('DOMContentLoaded', async () => {
-    const tableBody = document.getElementById('adminTableBody');
+let currentPassword = '';
 
-    // Prompt for a simple admin password for basic protection
-    const password = prompt('Enter Admin Password (hint: admin123)');
-    if (password !== 'admin123') {
-        document.body.innerHTML = '<h2 style="text-align:center;margin-top:50px;">Access Denied</h2>';
-        return;
+document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    const loginWrapper = document.getElementById('loginWrapper');
+    const adminPanel = document.getElementById('adminPanel');
+    const passwordInput = document.getElementById('adminPassword');
+    const loginError = document.getElementById('loginError');
+    const tableBody = document.getElementById('adminTableBody');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // Check if session exists
+    if (sessionStorage.getItem('adminAuth') === 'admin123') {
+        currentPassword = 'admin123';
+        showAdminPanel();
+    }
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const pwd = passwordInput.value;
+        // Simple client side check before server validation
+        if (pwd === 'admin123') {
+            currentPassword = pwd;
+            sessionStorage.setItem('adminAuth', pwd);
+            showAdminPanel();
+        } else {
+            loginError.style.display = 'block';
+            passwordInput.value = '';
+        }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+        sessionStorage.removeItem('adminAuth');
+        currentPassword = '';
+        adminPanel.style.display = 'none';
+        loginWrapper.style.display = 'flex';
+        passwordInput.value = '';
+        loginError.style.display = 'none';
+    });
+
+    async function showAdminPanel() {
+        loginWrapper.style.display = 'none';
+        adminPanel.style.display = 'block';
+        await loadArticles();
     }
 
     async function loadArticles() {
@@ -23,18 +59,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         tableBody.innerHTML = '';
         resources.forEach(resource => {
             const isGated = resource.access && resource.access.humans === 'paid';
+            const price = resource.price || '0.00';
             
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${resource.id}</td>
-                <td class="article-title">${resource.title}</td>
+                <td class="article-title" title="${resource.title}">${resource.title}</td>
                 <td><span style="text-transform:capitalize;">${resource.tags[0]}</span></td>
-                <td>${resource.price} ${resource.currency}</td>
-                <td><strong>${isGated ? 'Paid / Gated' : 'Free / Public'}</strong></td>
+                <td><span class="status-badge ${isGated ? 'badge-gated' : 'badge-free'}">${isGated ? 'Locked' : 'Public'}</span></td>
                 <td>
-                    <button class="toggle-btn ${isGated ? 'btn-free' : 'btn-gated'}" data-id="${resource.id}" data-current="${isGated}">
-                        ${isGated ? 'Make Free' : 'Gate Content'}
-                    </button>
+                    <div class="price-container">
+                        <input type="number" step="0.01" min="0" class="price-input" id="price-${resource.id}" value="${price}">
+                        <span style="font-size:0.8rem;color:var(--text-muted)">USDC</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="action-container">
+                        <button class="action-btn save-btn" data-id="${resource.id}">Save Price</button>
+                        <button class="action-btn toggle-btn ${isGated ? 'btn-free' : 'btn-gated'}" data-id="${resource.id}" data-current="${isGated}">
+                            ${isGated ? 'Make Free' : 'Gate Content'}
+                        </button>
+                    </div>
                 </td>
             `;
             tableBody.appendChild(tr);
@@ -46,30 +91,52 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const id = e.target.getAttribute('data-id');
                 const isCurrentlyGated = e.target.getAttribute('data-current') === 'true';
                 const newAccess = isCurrentlyGated ? 'free' : 'paid';
+                const currentPrice = document.getElementById(\`price-\${id}\`).value;
                 
-                e.target.innerText = 'Updating...';
-                e.target.disabled = true;
+                await updateResource(e.target, id, newAccess, currentPrice);
+            });
+        });
 
-                try {
-                    const res = await fetch('/api/admin/update-gate', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ id, access: newAccess, password: 'admin123' })
-                    });
-                    
-                    if (res.ok) {
-                        loadArticles(); // Reload table
-                    } else {
-                        alert('Failed to update access status.');
-                        e.target.disabled = false;
-                        e.target.innerText = isCurrentlyGated ? 'Make Free' : 'Gate Content';
-                    }
-                } catch (error) {
-                    console.error('Update failed', error);
-                }
+        document.querySelectorAll('.save-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const id = e.target.getAttribute('data-id');
+                const toggleBtn = document.querySelector(\`.toggle-btn[data-id="\${id}"]\`);
+                const access = toggleBtn.getAttribute('data-current') === 'true' ? 'paid' : 'free';
+                const currentPrice = document.getElementById(\`price-\${id}\`).value;
+                
+                const originalText = e.target.innerText;
+                e.target.innerText = 'Saving...';
+                
+                await updateResource(null, id, access, currentPrice);
+                
+                e.target.innerText = 'Saved!';
+                setTimeout(() => e.target.innerText = originalText, 1500);
             });
         });
     }
 
-    loadArticles();
+    async function updateResource(btnEl, id, newAccess, newPrice) {
+        if (btnEl) {
+            btnEl.innerText = 'Updating...';
+            btnEl.disabled = true;
+        }
+
+        try {
+            const res = await fetch('/api/admin/update-gate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, access: newAccess, price: newPrice, password: currentPassword })
+            });
+            
+            if (res.ok) {
+                await loadArticles();
+            } else {
+                alert('Failed to update. Unauthorized?');
+                if (btnEl) btnEl.disabled = false;
+            }
+        } catch (error) {
+            console.error('Update failed', error);
+            if (btnEl) btnEl.disabled = false;
+        }
+    }
 });
