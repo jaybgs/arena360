@@ -15,8 +15,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -36,8 +36,8 @@
         "basketball"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -57,8 +57,8 @@
         "tennis"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -78,8 +78,8 @@
         "formula1"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -99,8 +99,8 @@
         "cricket"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -120,8 +120,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -141,8 +141,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -162,8 +162,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -183,8 +183,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -204,8 +204,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -225,8 +225,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -246,8 +246,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -267,8 +267,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -288,8 +288,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -309,8 +309,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -330,8 +330,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -351,8 +351,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -372,8 +372,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -393,8 +393,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -414,8 +414,8 @@
         "football"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -435,8 +435,8 @@
         "basketball"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -456,8 +456,8 @@
         "basketball"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -477,8 +477,8 @@
         "basketball"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -498,8 +498,8 @@
         "tennis"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -519,8 +519,8 @@
         "tennis"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -540,8 +540,8 @@
         "tennis"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -561,8 +561,8 @@
         "formula1"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -582,8 +582,8 @@
         "formula1"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -603,8 +603,8 @@
         "cricket"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
@@ -624,8 +624,8 @@
         "cricket"
       ],
       "access": {
-        "humans": "paid",
-        "agents": "paid"
+        "humans": "free",
+        "agents": "free"
       },
       "unlock": {
         "mode": "one_time"
