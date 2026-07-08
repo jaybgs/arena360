@@ -78,6 +78,11 @@ app.get('/admin', (req, res) => {
     res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
+// Article Route (backwards compatibility)
+app.get('/article', (req, res) => {
+    res.sendFile(path.join(__dirname, 'article.html'));
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
