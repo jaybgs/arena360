@@ -6,7 +6,7 @@
       "title": "2026 World Cup: The Knockout Stages Heat Up",
       "description": "As the North American tournament enters the crucial knockout phase, we analyze the favorites.",
       "type": "article",
-      "price": "0.01",
+      "price": "0.002",
       "currency": "USDC",
       "recipient": "0x0000000000000000000000000000000000000000",
       "path": "/article.html?id=101",
@@ -15,8 +15,8 @@
         "football"
       ],
       "access": {
-        "humans": "free",
-        "agents": "free"
+        "humans": "paid",
+        "agents": "paid"
       },
       "unlock": {
         "mode": "one_time"
