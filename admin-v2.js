@@ -36,7 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const pwd = passwordInput.value;
+        const pwd = passwordInput.value.trim();
+        console.log("Attempting login with password length: ", pwd.length);
         // Simple client side check before server validation
         if (pwd === 'admin123') {
             currentPassword = pwd;
@@ -110,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const id = e.target.getAttribute('data-id');
                 const isCurrentlyGated = e.target.getAttribute('data-current') === 'true';
                 const newAccess = isCurrentlyGated ? 'free' : 'paid';
-                const currentPrice = document.getElementById(\`price-\${id}\`).value;
+                const currentPrice = document.getElementById(`price-${id}`).value;
                 
                 await updateResource(e.target, id, newAccess, currentPrice);
             });
@@ -119,9 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.save-btn').forEach(btn => {
             btn.addEventListener('click', async (e) => {
                 const id = e.target.getAttribute('data-id');
-                const toggleBtn = document.querySelector(\`.toggle-btn[data-id="\${id}"]\`);
+                const toggleBtn = document.querySelector(`.toggle-btn[data-id="${id}"]`);
                 const access = toggleBtn.getAttribute('data-current') === 'true' ? 'paid' : 'free';
-                const currentPrice = document.getElementById(\`price-\${id}\`).value;
+                const currentPrice = document.getElementById(`price-${id}`).value;
                 
                 const originalText = e.target.innerText;
                 e.target.innerText = 'Saving...';
