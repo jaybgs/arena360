@@ -1,0 +1,635 @@
+{
+  "origin": "http://localhost:5000",
+  "resources": [
+    {
+      "id": "101",
+      "title": "2026 World Cup: The Knockout Stages Heat Up",
+      "description": "As the North American tournament enters the crucial knockout phase, we analyze the favorites.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=101",
+      "url": "http://localhost:5000/article.html?id=101",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "102",
+      "title": "NBA Offseason 2026: Biggest Free Agency Moves",
+      "description": "A breakdown of the blockbusters and surprising trades shifting the balance of power in the NBA.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=102",
+      "url": "http://localhost:5000/article.html?id=102",
+      "tags": [
+        "basketball"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "103",
+      "title": "Wimbledon 2026: The New Grass Court Kings and Queens",
+      "description": "With the old guard largely retired, a new generation seizes the spotlight at the All England Club.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=103",
+      "url": "http://localhost:5000/article.html?id=103",
+      "tags": [
+        "tennis"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "104",
+      "title": "F1 2026 Regulations: How Teams Are Adapting Mid-Season",
+      "description": "Analyzing the impact of the new power unit and aero rules as we hit the European leg.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=104",
+      "url": "http://localhost:5000/article.html?id=104",
+      "tags": [
+        "formula1"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "105",
+      "title": "T20 World Cup Aftermath: The Future of the Short Format",
+      "description": "Following a thrilling tournament, what changes are coming to franchise leagues worldwide?",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=105",
+      "url": "http://localhost:5000/article.html?id=105",
+      "tags": [
+        "cricket"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "1",
+      "title": "The Evolution of the False 9 in Modern Football",
+      "description": "How tactical innovations have redefined the role of the central striker in the modern game.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=1",
+      "url": "http://localhost:5000/article.html?id=1",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "2",
+      "title": "Top 10 Premier League Midfielders of the Decade",
+      "description": "A look back at the maestros who have dominated the midfield in the English top flight.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=2",
+      "url": "http://localhost:5000/article.html?id=2",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "3",
+      "title": "Champions League Magic: Memorable Comebacks",
+      "description": "Reliving the most spectacular turnarounds in UEFA Champions League history.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=3",
+      "url": "http://localhost:5000/article.html?id=3",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "4",
+      "title": "Rising Stars: Young Footballers to Watch",
+      "description": "Highlighting the next generation of football prodigies ready to take the world by storm.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=4",
+      "url": "http://localhost:5000/article.html?id=4",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "5",
+      "title": "The Art of the Perfect Free Kick",
+      "description": "Analyzing the technique and science behind curling the ball past a defensive wall.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=5",
+      "url": "http://localhost:5000/article.html?id=5",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "6",
+      "title": "Defensive Masterclasses: The Catenaccio Legacy",
+      "description": "How Italian defensive tactics have influenced modern football formations.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=6",
+      "url": "http://localhost:5000/article.html?id=6",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "7",
+      "title": "The Impact of VAR on Football Dynamics",
+      "description": "Examining how Video Assistant Referees have altered the flow and fairness of the game.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=7",
+      "url": "http://localhost:5000/article.html?id=7",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "8",
+      "title": "World Cup Classics: Historic Encounters",
+      "description": "Revisiting matches that defined the biggest tournament in world football.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=8",
+      "url": "http://localhost:5000/article.html?id=8",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "9",
+      "title": "Football Management: Balancing Tactics and Egos",
+      "description": "The multifaceted role of a modern football manager in elite clubs.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=9",
+      "url": "http://localhost:5000/article.html?id=9",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "10",
+      "title": "Derby Days: The Most Fierce Rivalries",
+      "description": "Exploring the passion and tension of local football derbies around the world.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=10",
+      "url": "http://localhost:5000/article.html?id=10",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "11",
+      "title": "The Role of the Modern Full-Back",
+      "description": "How full-backs have transformed into key offensive weapons.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=11",
+      "url": "http://localhost:5000/article.html?id=11",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "12",
+      "title": "Financial Fair Play: Saving or Ruining the Game?",
+      "description": "A deep dive into the economics of modern football and UEFA's regulations.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=12",
+      "url": "http://localhost:5000/article.html?id=12",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "13",
+      "title": "Grassroots Football: Where Dreams Begin",
+      "description": "The importance of local clubs and academies in nurturing future talent.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=13",
+      "url": "http://localhost:5000/article.html?id=13",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "14",
+      "title": "The Psychology of Penalty Shootouts",
+      "description": "Understanding the mental pressure and preparation required for spot-kicks.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=14",
+      "url": "http://localhost:5000/article.html?id=14",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "15",
+      "title": "Women's Football: A Rapid Evolution",
+      "description": "The surging popularity and professionalization of the women's game.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=15",
+      "url": "http://localhost:5000/article.html?id=15",
+      "tags": [
+        "football"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "16",
+      "title": "LeBron's Legacy and the Next Generation",
+      "description": "Analyzing the impact of veterans and the rise of young stars in the NBA.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=16",
+      "url": "http://localhost:5000/article.html?id=16",
+      "tags": [
+        "basketball"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "17",
+      "title": "The Three-Point Revolution",
+      "description": "How analytics and sharpshooters changed the way basketball is played.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=17",
+      "url": "http://localhost:5000/article.html?id=17",
+      "tags": [
+        "basketball"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "18",
+      "title": "Building an NBA Dynasty",
+      "description": "What it takes for a franchise to dominate the league for years.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=18",
+      "url": "http://localhost:5000/article.html?id=18",
+      "tags": [
+        "basketball"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "19",
+      "title": "Grand Slam Glory: The Ultimate Test",
+      "description": "The grueling nature of a two-week Grand Slam tournament.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=19",
+      "url": "http://localhost:5000/article.html?id=19",
+      "tags": [
+        "tennis"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "20",
+      "title": "The Evolution of Racket Technology",
+      "description": "How modern materials have added power and spin to the game.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=20",
+      "url": "http://localhost:5000/article.html?id=20",
+      "tags": [
+        "tennis"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "21",
+      "title": "Rivalries on the Court: Federer vs. Nadal",
+      "description": "A retrospective on one of the greatest rivalries in sports history.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=21",
+      "url": "http://localhost:5000/article.html?id=21",
+      "tags": [
+        "tennis"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "22",
+      "title": "F1 Aerodynamics Explained",
+      "description": "How teams manipulate airflow to gain milliseconds on the track.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=22",
+      "url": "http://localhost:5000/article.html?id=22",
+      "tags": [
+        "formula1"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "23",
+      "title": "The Strategy of the Pit Stop",
+      "description": "Why a two-second tire change can make or break a race.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=23",
+      "url": "http://localhost:5000/article.html?id=23",
+      "tags": [
+        "formula1"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "24",
+      "title": "T20 Cricket: The Rise of the Short Format",
+      "description": "How franchise leagues have revolutionized the gentleman's game.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=24",
+      "url": "http://localhost:5000/article.html?id=24",
+      "tags": [
+        "cricket"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    },
+    {
+      "id": "25",
+      "title": "The Ashes: A Historic Rivalry",
+      "description": "The tradition and intensity of England vs. Australia.",
+      "type": "article",
+      "price": "0.01",
+      "currency": "USDC",
+      "recipient": "0x0000000000000000000000000000000000000000",
+      "path": "/article.html?id=25",
+      "url": "http://localhost:5000/article.html?id=25",
+      "tags": [
+        "cricket"
+      ],
+      "access": {
+        "humans": "paid",
+        "agents": "paid"
+      },
+      "unlock": {
+        "mode": "one_time"
+      }
+    }
+  ]
+}
