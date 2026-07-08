@@ -43,7 +43,11 @@ app.get('/api/nibgate/access', (req, res) => {
     // Access check logic per SDK
     // If the resource is marked as 'paid', we mock a 402 Payment Required for demonstration.
     if (resource.access && resource.access.humans === 'paid') {
-        return res.status(402).json({ error: 'Payment Required', code: 'payment_required' });
+        return res.status(402).json({ 
+            error: 'Payment Required', 
+            code: 'payment_required',
+            price: resource.price || '0.00'
+        });
     }
     
     // Otherwise it's free

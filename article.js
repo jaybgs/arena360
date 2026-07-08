@@ -53,6 +53,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const accessRes = await fetch(`/api/nibgate/access?id=${idParam}`);
         if (accessRes.status === 402) {
+            const errData = await accessRes.json();
+            const price = errData.price || '0.00';
+            
             articleContainer.innerHTML = `
                 <a href="javascript:history.back()" class="back-link">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -68,10 +71,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 20px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         <h2 style="margin-bottom: 15px; font-size: 2rem;">Premium Content</h2>
                         <p style="margin-bottom: 25px; font-size: 1.2rem;">This article is gated. You must unlock it to continue reading.</p>
-                        <button class="unlock-btn" data-nibgate-unlock style="background: var(--primary-color); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.2s;">Unlock with Nibgate</button>
+                        <button class="unlock-btn" data-nibgate-unlock="${article.id}" onclick="if(window.nibgate) { window.nibgate.unlock('${article.id}'); }" style="background: var(--primary-color); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                            Unlock with ${price} USDC
+                        </button>
                     </div>
                 </div>
             `;
+            
+            // Try to force widget re-scan in case it missed the dynamic injection
+            if (window.nibgate && typeof window.nibgate.scan === 'function') {
+                setTimeout(() => window.nibgate.scan(), 100);
+            }
             return;
         }
     } catch (e) {
