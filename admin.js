@@ -9,6 +9,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.getElementById('adminTableBody');
     const logoutBtn = document.getElementById('logoutBtn');
 
+    // Theme logic
+    const themeToggle = document.getElementById('themeToggle');
+    const sunIcon = document.querySelector('.sun');
+    const moonIcon = document.querySelector('.moon');
+
+    const toggleTheme = () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        if (isDark) {
+            document.documentElement.removeAttribute('data-theme');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            sunIcon.classList.add('hidden');
+            moonIcon.classList.remove('hidden');
+        }
+    };
+    themeToggle.addEventListener('click', toggleTheme);
+
     // Check if session exists
     if (sessionStorage.getItem('adminAuth') === 'admin123') {
         currentPassword = 'admin123';
