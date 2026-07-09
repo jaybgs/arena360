@@ -347,7 +347,8 @@
     const win = browserWindow();
     if (!win || !proof) return false;
     try {
-      win.localStorage.setItem(proofStorageKey(resource), String(proof));
+      const value = typeof proof === "string" ? proof : JSON.stringify(proof);
+      win.localStorage.setItem(proofStorageKey(resource), value);
       return true;
     } catch (_error) {
       return false;
@@ -1025,6 +1026,58 @@
     if (options.autoMount !== false) mount();
     return controller;
   }
+  function mountRatingUI(resource, options = {}) {
+    const item = createGate(resource, options.gateOptions || {});
+    const win = browserWindow();
+    if (!win) return null;
+    const target = typeof options.target === "string" ? win.document.querySelector(options.target) : options.target;
+    if (!target) return null;
+    const stars = [1, 2, 3, 4, 5];
+    let selectedRating = 0;
+    const container = win.document.createElement("div");
+    container.className = "nibgate-rating-ui";
+    container.style.cssText = "display:flex;align-items:center;gap:4px;padding:8px 0";
+    const starButtons = stars.map((value) => {
+      const btn = win.document.createElement("button");
+      btn.type = "button";
+      btn.dataset.nibgateRatingValue = String(value);
+      btn.setAttribute("aria-label", `${value} star${value > 1 ? "s" : ""}`);
+      btn.innerHTML = "\u2606";
+      btn.style.cssText = "background:none;border:none;font-size:24px;cursor:pointer;color:#ccc;transition:color 0.15s;padding:2px;line-height:1";
+      btn.addEventListener("mouseenter", () => {
+        starButtons.forEach((b, i) => b.style.color = i < value ? "#f5b342" : "#ccc");
+      });
+      btn.addEventListener("mouseleave", () => {
+        starButtons.forEach((b, i) => b.style.color = i < selectedRating ? "#f5b342" : "#ccc");
+      });
+      btn.addEventListener("click", () => {
+        selectedRating = value;
+        starButtons.forEach((b, i) => b.style.color = i < value ? "#f5b342" : "#ccc");
+        rate(item.resource, { rating: value }).catch(() => {
+        });
+      });
+      container.appendChild(btn);
+      return btn;
+    });
+    const statusEl = win.document.createElement("span");
+    statusEl.style.cssText = "font-size:13px;color:#888;margin-left:8px";
+    statusEl.textContent = options.label || "Rate this content";
+    container.appendChild(statusEl);
+    target.appendChild(container);
+    function rate(r, input = {}) {
+      return item.rate({ ...input, rating: r });
+    }
+    function setRating(value) {
+      selectedRating = value;
+      starButtons.forEach((b, i) => b.style.color = i < value ? "#f5b342" : "#ccc");
+    }
+    return {
+      resource: item.resource,
+      container,
+      setRating,
+      rate
+    };
+  }
   async function payAndUnlockResource(resource, options = {}) {
     const item = createGate(resource, options.gateOptions || {});
     const payPath = options.payPath || item.resource.payPath || "/api/nibgate/pay";
@@ -1148,6 +1201,9 @@
       },
       createOnchainRating(resource, options = {}) {
         return createOnchainRating(resourceWithDefaults(resource), options);
+      },
+      mountRatingUI(resource, options = {}) {
+        return mountRatingUI(resourceWithDefaults(resource), options);
       },
       payAndUnlockResource(resource, options = {}) {
         return payAndUnlockResource(resourceWithDefaults(resource), options);
