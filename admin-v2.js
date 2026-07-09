@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch('/nibgate.json');
             const data = await response.json();
-            renderTable(data.resources);
+            renderTable(data.content);
         } catch (err) {
             console.error('Failed to load nibgate metadata', err);
             tableBody.innerHTML = '<tr><td colspan="6">Failed to load articles.</td></tr>';

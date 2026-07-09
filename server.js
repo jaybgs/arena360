@@ -32,12 +32,14 @@ app.get('/nibgate.json', (req, res) => {
     const actualOrigin = `${protocol}://${host}`;
     
     data.origin = actualOrigin;
-    if (data.resources) {
-        data.resources.forEach(r => {
+    if (data.content) {
+        data.content.forEach(r => {
             r.url = `${actualOrigin}${r.path}`;
         });
     }
     
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
     res.json(data);
 });
 
@@ -48,8 +50,8 @@ app.get('/api/nibgate/access', (req, res) => {
     
     // Load resource metadata
     const raw = fs.readFileSync(path.join(__dirname, 'nibgate.json'), 'utf8');
-    const resources = JSON.parse(raw).resources;
-    const resource = resources.find(r => String(r.id) === String(id));
+    const content = JSON.parse(raw).content;
+    const resource = content.find(r => String(r.id) === String(id));
     
     if (!resource) return res.status(404).send('Not found');
 
@@ -76,7 +78,7 @@ app.post('/api/admin/update-gate', (req, res) => {
     const raw = fs.readFileSync(filePath, 'utf8');
     const data = JSON.parse(raw);
     
-    const resource = data.resources.find(r => String(r.id) === String(id));
+    const resource = data.content.find(r => String(r.id) === String(id));
     if (resource) {
         resource.access = resource.access || {};
         resource.access.humans = access;
