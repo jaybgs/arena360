@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 20px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         <h2 style="margin-bottom: 15px; font-size: 2rem;">Premium Content</h2>
                         <p style="margin-bottom: 25px; font-size: 1.2rem;">This article is gated. You must unlock it to continue reading.</p>
-                        <button class="unlock-btn" data-nibgate-unlock="${article.id}" onclick="if(window.nibgate && typeof window.nibgate.gate === 'function') { window.nibgate.gate('${article.id}'); } else { console.error('Nibgate gate API not found'); }" style="background-color: #fca311; color: #14213d; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 15px;">
+                        <button class="unlock-btn" onclick="const btn = document.getElementById('nibgate-hidden-btn'); btn.setAttribute('data-nibgate-unlock', '${article.id}'); btn.click();" style="background-color: #fca311; color: #14213d; padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 15px;">
                             Unlock with ${price} USDC
                         </button>
                     </div>
