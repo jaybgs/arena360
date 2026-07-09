@@ -35,14 +35,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const articleContainer = document.getElementById('articleContainer');
 
     if (!idParam) {
-        articleContainer.innerHTML = '<h2>Article not found (No ID provided).</h2><p>Please return home and try clicking the article again.</p><a href="index.html" class="back-link">Return to Home</a>';
+        articleContainer.innerHTML = '<h2>Article not found (No ID provided).</h2><p>Please return home and try clicking the article again.</p><a href="/" class="back-link">Return to Home</a>';
         return;
     }
 
     const article = articles.find(a => String(a.id) === String(idParam));
 
     if (!article) {
-        articleContainer.innerHTML = '<h2>Article not found (Invalid ID).</h2><a href="index.html" class="back-link">Return to Home</a>';
+        articleContainer.innerHTML = '<h2>Article not found (Invalid ID).</h2><a href="/" class="back-link">Return to Home</a>';
         return;
     }
 

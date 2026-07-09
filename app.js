@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             card.className = 'card';
             card.onclick = (e) => { 
                 localStorage.setItem('currentArticleId', item.id);
-                window.location.href = `article.html?id=${item.id}`; 
+                window.location.href = `/article?id=${item.id}`; 
             };
             card.innerHTML = `
                 <div class="card-img">
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3 class="card-title">${item.title}</h3>
                     <p class="card-summary">${item.summary}</p>
                     <div class="card-footer">
-                        <a href="article.html?id=${item.id}" class="read-more">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+                        <a href="/article?id=${item.id}" class="read-more">Read Article <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
                     </div>
                 </div>
             `;
