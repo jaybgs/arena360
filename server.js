@@ -67,7 +67,7 @@ app.get('/nibgate.json', async (req, res) => {
     
     let content = [];
     if (pool) {
-        const query = 'SELECT * FROM articles';
+        const query = req.query.all ? 'SELECT * FROM articles' : "SELECT * FROM articles WHERE access_humans = 'paid'";
         const dbRes = await pool.query(query);
         content = dbRes.rows.map(r => ({
             id: r.id,
@@ -87,6 +87,9 @@ app.get('/nibgate.json', async (req, res) => {
         const raw = fs.readFileSync(path.join(__dirname, 'nibgate.json'), 'utf8');
         const data = JSON.parse(raw);
         content = data.content;
+        if (!req.query.all) {
+            content = content.filter(c => c.access && c.access.humans === 'paid');
+        }
         content.forEach(r => { r.url = `${actualOrigin}${r.path}`; });
     }
     
