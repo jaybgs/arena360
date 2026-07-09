@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     { id: article.id, price: price },
                     { 
                         accessPath: '/api/nibgate/access?id=' + article.id,
-                        circleClientModule: window.circleClientModule, // Injected to bypass native browser imports
+                        circleClientModuleUrl: 'https://esm.sh/@circle-fin/x402-batching@3/client',
                         onUnlock: () => {
                             // Render the full article locally
                             renderFullArticle();
