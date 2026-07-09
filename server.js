@@ -125,7 +125,17 @@ app.get('/api/nibgate/access', async (req, res) => {
         return res.status(402).json({ 
             error: 'Payment Required', 
             code: 'payment_required',
-            price: resource.price || '0.00'
+            price: resource.price || '0.00',
+            accepts: [{
+                asset: resource.currency || "USDC",
+                amount: resource.price || "0.00",
+                network: "eip155:5042002",
+                extra: {
+                    name: 'GatewayWalletBatched',
+                    version: '1',
+                    verifyingContract: '0x0000000000000000000000000000000000000000'
+                }
+            }]
         });
     }
     
