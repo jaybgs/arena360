@@ -108,7 +108,7 @@ app.get('/api/nibgate/access', async (req, res) => {
         const dbRes = await pool.query('SELECT * FROM articles WHERE id = $1', [id]);
         if (dbRes.rows.length > 0) {
             const r = dbRes.rows[0];
-            resource = { price: r.price, access: { humans: r.access_humans } };
+            resource = { price: r.price, recipient: r.recipient, currency: r.currency, access: { humans: r.access_humans } };
         }
     } else {
         const raw = fs.readFileSync(path.join(__dirname, 'nibgate.json'), 'utf8');
@@ -129,6 +129,7 @@ app.get('/api/nibgate/access', async (req, res) => {
             accepts: [{
                 asset: resource.currency || "USDC",
                 amount: resource.price || "0.00",
+                recipient: resource.recipient || "0x0000000000000000000000000000000000000000",
                 network: "eip155:5042002",
                 extra: {
                     name: 'GatewayWalletBatched',
