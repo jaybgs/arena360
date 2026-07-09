@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function loadArticles() {
         try {
-            const response = await fetch('/nibgate.json');
+            const response = await fetch('/nibgate.json?all=true');
             const data = await response.json();
             renderTable(data.content);
         } catch (err) {
