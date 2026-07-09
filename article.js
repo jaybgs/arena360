@@ -85,6 +85,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     { 
                         accessPath: '/api/nibgate/access?id=' + article.id,
                         circleClientModuleUrl: 'https://esm.sh/@circle-fin/x402-batching@3/client',
+                        onStatus: (msg) => {
+                            console.log('NIBGATE SDK STATUS:', msg);
+                            const btn = document.querySelector('.unlock-btn');
+                            if (btn && btn.textContent !== 'Connect Wallet') {
+                                btn.textContent = msg;
+                            }
+                        },
                         onUnlock: () => {
                             // Render the full article locally
                             renderFullArticle();
