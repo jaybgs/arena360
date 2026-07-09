@@ -1220,4 +1220,6 @@
 
   // client-nibgate.js
   window.nibgateCheckout = createEvmGatewayUnlock;
+  window.nibgateRating = createOnchainRating;
+  window.nibgateMountRatingUI = mountRatingUI;
 })();

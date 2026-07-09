@@ -123,41 +123,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="rating-container" style="margin-top: 40px; padding: 20px; background: var(--bg-card); border-radius: 12px; text-align: center; border: 1px solid var(--border-color);">
             <h3 style="margin-bottom: 15px;">Rate this Content</h3>
             <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Verified by Nibgate Protocol</p>
-            <div class="stars" id="ratingStars">
-                <span data-val="1" style="cursor:pointer; font-size:28px; color:#555; transition: color 0.2s;">★</span>
-                <span data-val="2" style="cursor:pointer; font-size:28px; color:#555; transition: color 0.2s;">★</span>
-                <span data-val="3" style="cursor:pointer; font-size:28px; color:#555; transition: color 0.2s;">★</span>
-                <span data-val="4" style="cursor:pointer; font-size:28px; color:#555; transition: color 0.2s;">★</span>
-                <span data-val="5" style="cursor:pointer; font-size:28px; color:#555; transition: color 0.2s;">★</span>
-            </div>
-            <p id="ratingStatus" style="margin-top:10px; font-size:0.95rem; color:var(--text-color); font-weight:600;"></p>
+            <div id="nibgate-rating-container"></div>
         </div>
     `;
 
-    // Rating Logic
-    const stars = document.querySelectorAll('#ratingStars span');
-    const ratingStatus = document.getElementById('ratingStatus');
-    stars.forEach(star => {
-        star.addEventListener('click', (e) => {
-            const val = parseInt(e.target.getAttribute('data-val'));
-            stars.forEach(s => {
-                s.style.color = parseInt(s.getAttribute('data-val')) <= val ? '#f1c40f' : '#555';
-            });
-            ratingStatus.innerHTML = `Submitting ${val}-star rating to Nibgate network...`;
-            setTimeout(() => {
-                ratingStatus.innerHTML = `Thank you! Your ${val}-star rating has been securely recorded.`;
-                ratingStatus.style.color = '#2ed573';
-            }, 1000);
-        });
-        // Hover effects
-        star.addEventListener('mouseover', (e) => {
-            const val = parseInt(e.target.getAttribute('data-val'));
-            stars.forEach(s => {
-                if (parseInt(s.getAttribute('data-val')) <= val) s.style.opacity = '0.7';
-            });
-        });
-        star.addEventListener('mouseout', () => {
-            stars.forEach(s => s.style.opacity = '1');
-        });
+    // Initialize official Nibgate Rating UI
+    if (window.nibgateMountRatingUI) {
+        window.nibgateMountRatingUI(
+            { id: article.id },
+            { 
+                container: '#nibgate-rating-container',
+                label: 'Rate this article onchain',
+                successMessage: 'Thank you! Your rating has been securely recorded on the Nibgate network.',
+                pendingMessage: 'Please confirm the rating signature in your wallet...',
+                errorMessage: 'Rating failed. Make sure your wallet is connected.'
+            }
+        );
     }
+}
 });
