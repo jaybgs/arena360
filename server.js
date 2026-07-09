@@ -146,15 +146,22 @@ app.get('/api/nibgate/access', async (req, res) => {
 
 // Admin API to toggle gating
 app.post('/api/admin/update-gate', async (req, res) => {
-    const { id, access, price, password } = req.body;
+    const { id, access, price, recipient, password } = req.body;
     if (password !== 'admin123') return res.status(403).send('Forbidden');
     
     if (pool) {
         let updateQuery = 'UPDATE articles SET access_humans = $1, access_agents = $1';
         let params = [access, id];
+        let paramIndex = 3;
         if (price !== undefined && price !== null) {
-            updateQuery += ', price = $3';
+            updateQuery += `, price = $${paramIndex}`;
             params.push(String(price));
+            paramIndex++;
+        }
+        if (recipient !== undefined && recipient !== null) {
+            updateQuery += `, recipient = $${paramIndex}`;
+            params.push(String(recipient));
+            paramIndex++;
         }
         updateQuery += ' WHERE id = $2';
         await pool.query(updateQuery, params);
@@ -170,6 +177,9 @@ app.post('/api/admin/update-gate', async (req, res) => {
             resource.access.agents = access;
             if (price !== undefined && price !== null) {
                 resource.price = String(price);
+            }
+            if (recipient !== undefined && recipient !== null) {
+                resource.recipient = String(recipient);
             }
             fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
             return res.json({ success: true });

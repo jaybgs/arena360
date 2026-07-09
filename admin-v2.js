@@ -94,8 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </td>
                 <td>
+                    <input type="text" class="price-input" style="width:250px; font-size:0.8rem;" id="recipient-${resource.id}" value="${resource.recipient || '0x0000000000000000000000000000000000000000'}">
+                </td>
+                <td>
                     <div class="action-container">
-                        <button class="action-btn save-btn" data-id="${resource.id}">Save Price</button>
+                        <button class="action-btn save-btn" data-id="${resource.id}">Save</button>
                         <button class="action-btn toggle-btn ${isGated ? 'btn-free' : 'btn-gated'}" data-id="${resource.id}" data-current="${isGated}">
                             ${isGated ? 'Make Free' : 'Gate Content'}
                         </button>
@@ -112,8 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isCurrentlyGated = e.target.getAttribute('data-current') === 'true';
                 const newAccess = isCurrentlyGated ? 'free' : 'paid';
                 const currentPrice = document.getElementById(`price-${id}`).value;
+                const currentRecipient = document.getElementById(`recipient-${id}`).value;
                 
-                await updateResource(e.target, id, newAccess, currentPrice);
+                await updateResource(e.target, id, newAccess, currentPrice, currentRecipient);
             });
         });
 
@@ -123,11 +127,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const toggleBtn = document.querySelector(`.toggle-btn[data-id="${id}"]`);
                 const access = toggleBtn.getAttribute('data-current') === 'true' ? 'paid' : 'free';
                 const currentPrice = document.getElementById(`price-${id}`).value;
+                const currentRecipient = document.getElementById(`recipient-${id}`).value;
                 
                 const originalText = e.target.innerText;
                 e.target.innerText = 'Saving...';
                 
-                await updateResource(null, id, access, currentPrice);
+                await updateResource(null, id, access, currentPrice, currentRecipient);
                 
                 e.target.innerText = 'Saved!';
                 setTimeout(() => e.target.innerText = originalText, 1500);
@@ -135,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function updateResource(btnEl, id, newAccess, newPrice) {
+    async function updateResource(btnEl, id, newAccess, newPrice, newRecipient) {
         if (btnEl) {
             btnEl.innerText = 'Updating...';
             btnEl.disabled = true;
@@ -145,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await fetch('/api/admin/update-gate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, access: newAccess, price: newPrice, password: currentPassword })
+                body: JSON.stringify({ id, access: newAccess, price: newPrice, recipient: newRecipient, password: currentPassword })
             });
             
             if (res.ok) {
