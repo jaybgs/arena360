@@ -25,6 +25,19 @@ app.use(express.json());
 app.get('/nibgate.json', (req, res) => {
     const raw = fs.readFileSync(path.join(__dirname, 'nibgate.json'), 'utf8');
     const data = JSON.parse(raw);
+    
+    // Dynamically inject the actual host so it works in production (Render)
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    const host = req.get('host');
+    const actualOrigin = `${protocol}://${host}`;
+    
+    data.origin = actualOrigin;
+    if (data.resources) {
+        data.resources.forEach(r => {
+            r.url = `${actualOrigin}${r.path}`;
+        });
+    }
+    
     res.json(data);
 });
 
