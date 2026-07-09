@@ -4,7 +4,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "npm install",
+    "build": "npm install && npx esbuild client-nibgate.js --bundle --outfile=nibgate-bundle.js --format=iife",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,5 +16,8 @@
     "express": "^4.19.0",
     "pg": "^8.22.0"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "esbuild": "^0.28.1"
+  }
 }
