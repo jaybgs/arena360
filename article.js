@@ -78,20 +78,47 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `;
             
-            // Initialize the Nibgate checkout flow on the newly created button
+            // Initialize the official Nibgate SDK Gateway
             if (window.nibgateCheckout) {
-                window.nibgateCheckout(
+                const gateway = window.nibgateCheckout(
                     { id: article.id, price: price },
                     { 
-                        unlockButton: '.unlock-btn',
                         accessPath: '/api/nibgate/access?id=' + article.id,
-                        circleClientModuleUrl: 'https://esm.sh/@circle-fin/x402-batching@3/client',
+                        circleClientModule: window.circleClientModule, // Injected to bypass native browser imports
                         onUnlock: () => {
                             // Render the full article locally
                             renderFullArticle();
                         }
                     }
                 );
+
+                const btn = document.querySelector('.unlock-btn');
+                let isConnected = false;
+                
+                // Set initial user-requested state
+                btn.textContent = 'Connect Wallet';
+                
+                btn.addEventListener('click', async () => {
+                    if (!isConnected) {
+                        try {
+                            btn.textContent = 'Connecting...';
+                            await gateway.connect();
+                            isConnected = true;
+                            btn.textContent = `Pay ${price} USDC`;
+                        } catch (e) {
+                            btn.textContent = 'Connect Wallet';
+                            console.error('Wallet connection failed:', e);
+                        }
+                    } else {
+                        try {
+                            btn.textContent = 'Processing Payment...';
+                            await gateway.unlock();
+                        } catch (e) {
+                            btn.textContent = `Pay ${price} USDC`;
+                            console.error('Payment failed:', e);
+                        }
+                    }
+                });
             }
             
             // Try to force widget re-scan in case it missed the dynamic injection
