@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     { 
                         unlockButton: '.unlock-btn',
                         accessPath: '/api/nibgate/access?id=' + article.id,
+                        circleClientModuleUrl: 'https://esm.sh/@circle-fin/x402-batching@3/client',
                         onUnlock: () => {
                             // Render the full article locally
                             renderFullArticle();
