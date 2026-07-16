@@ -201,7 +201,8 @@ app.get('/api/health', async (req, res) => {
     }
     try {
         const check = await pool.query('SELECT COUNT(*) FROM articles');
-        return res.json({ status: 'ok', database: 'postgres', rows: check.rows[0].count });
+        const art = await pool.query('SELECT * FROM articles WHERE id = $1', ['101']);
+        return res.json({ status: 'ok', database: 'postgres', rows: check.rows[0].count, article101: art.rows[0] });
     } catch (err) {
         return res.status(500).json({ status: 'error', database: 'postgres', error: err.message });
     }
