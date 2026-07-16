@@ -85,8 +85,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             `;
             
             // Initialize the official Nibgate SDK Gateway
-            if (window.nibgateCheckout) {
-                const gateway = window.nibgateCheckout(
+            if (window.Nibgate && window.Nibgate.createEvmGatewayUnlock) {
+                const gateway = window.Nibgate.createEvmGatewayUnlock(
                     { 
                         id: article.id, 
                         price: price,
