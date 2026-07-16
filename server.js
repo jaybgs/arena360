@@ -165,8 +165,11 @@ app.post('/api/admin/update-gate', async (req, res) => {
         }
         updateQuery += ' WHERE id = $2';
         try {
-            await pool.query(updateQuery, params);
-            return res.json({ success: true, method: 'postgres' });
+            const result = await pool.query(updateQuery, params);
+            if (result.rowCount === 0) {
+                return res.status(404).json({ error: 'Article ID not found in Postgres database', id_searched: id });
+            }
+            return res.json({ success: true, method: 'postgres', rowsUpdated: result.rowCount });
         } catch (dbErr) {
             console.error('Postgres Update Error:', dbErr);
             return res.status(500).json({ error: 'Database error', details: dbErr.message });
