@@ -67,8 +67,23 @@ document.addEventListener('DOMContentLoaded', function() {
         loadArticles();
     }
 
+    function showNotification(message, isError) {
+        var existing = document.getElementById('adminNotification');
+        if (existing) existing.remove();
+
+        var div = document.createElement('div');
+        div.id = 'adminNotification';
+        div.style.cssText = 'position:fixed;top:20px;right:20px;padding:16px 24px;border-radius:8px;font-weight:600;z-index:9999;font-size:14px;box-shadow:0 4px 12px rgba(0,0,0,0.3);transition:opacity 0.3s;';
+        div.style.background = isError ? '#ff4757' : '#2ed573';
+        div.style.color = '#fff';
+        div.textContent = message;
+        document.body.appendChild(div);
+        setTimeout(function() { div.style.opacity = '0'; }, 2500);
+        setTimeout(function() { div.remove(); }, 3000);
+    }
+
     function loadArticles() {
-        console.log('[ADMIN] Loading articles...');
+        console.log('[ADMIN] Loading articles from Postgres...');
         var url = '/nibgate.json?all=true&t=' + Date.now();
         fetch(url)
             .then(function(response) {
@@ -77,6 +92,16 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(function(data) {
                 console.log('[ADMIN] Loaded', data.content.length, 'articles');
+                // Log article 101 specifically to verify Postgres data
+                var art101 = data.content.find(function(a) { return a.id === '101'; });
+                if (art101) {
+                    console.log('[ADMIN] Article 101 from server:', JSON.stringify({
+                        id: art101.id,
+                        price: art101.price,
+                        recipient: art101.recipient,
+                        access: art101.access
+                    }));
+                }
                 renderTable(data.content);
             })
             .catch(function(err) {
@@ -108,17 +133,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     '<input type="text" class="price-input" style="width:250px; font-size:0.8rem;" id="recipient-' + resource.id + '" value="' + recipient + '">' +
                 '</td>' +
                 '<td>' +
-                    '<button class="action-btn toggle-btn ' + (isGated ? 'btn-free' : 'btn-gated') + '" data-id="' + resource.id + '" data-current="' + isGated + '">' +
+                    '<button type="button" class="action-btn toggle-btn ' + (isGated ? 'btn-free' : 'btn-gated') + '" data-id="' + resource.id + '" data-current="' + isGated + '">' +
                         (isGated ? 'Make Free' : 'Gate Content') +
                     '</button>' +
                 '</td>';
             tableBody.appendChild(tr);
         });
 
-        // Attach click handlers to every Gate Content / Make Free button
+        // Attach click handlers
         var buttons = document.querySelectorAll('.toggle-btn');
         console.log('[ADMIN] Found', buttons.length, 'toggle buttons');
-        
+
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].addEventListener('click', handleToggleClick);
         }
@@ -137,8 +162,8 @@ document.addEventListener('DOMContentLoaded', function() {
         var currentPrice = priceEl ? priceEl.value : '0.00';
         var currentRecipient = recipientEl ? recipientEl.value : '';
 
-        console.log('[ADMIN] Button clicked for article:', id);
-        console.log('[ADMIN] Setting access to:', newAccess);
+        console.log('[ADMIN] === SAVING ARTICLE ' + id + ' ===');
+        console.log('[ADMIN] Access:', newAccess);
         console.log('[ADMIN] Price:', currentPrice);
         console.log('[ADMIN] Recipient:', currentRecipient);
 
@@ -153,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
             password: currentPassword
         });
 
-        console.log('[ADMIN] Sending POST to /api/admin/update-gate with:', payload);
+        console.log('[ADMIN] POST /api/admin/update-gate');
 
         fetch('/api/admin/update-gate', {
             method: 'POST',
@@ -167,21 +192,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         })
         .then(function(result) {
-            console.log('[ADMIN] Response body:', JSON.stringify(result.body));
+            console.log('[ADMIN] Response:', JSON.stringify(result.body));
             if (result.ok) {
-                console.log('[ADMIN] Update successful! Reloading table...');
+                console.log('[ADMIN] ✅ Saved to Postgres! Now verifying by reloading...');
+                showNotification('✅ Article ' + id + ' saved to database!', false);
                 loadArticles();
             } else {
                 var msg = result.body.details || result.body.error || 'Unknown error';
-                console.error('[ADMIN] Update failed:', msg);
-                alert('Failed to update: ' + msg);
+                console.error('[ADMIN] ❌ Save failed:', msg);
+                showNotification('❌ Failed: ' + msg, true);
                 btn.disabled = false;
                 btn.innerText = isCurrentlyGated ? 'Make Free' : 'Gate Content';
             }
         })
         .catch(function(error) {
-            console.error('[ADMIN] Network error:', error);
-            alert('Network error: ' + error.message);
+            console.error('[ADMIN] ❌ Network error:', error);
+            showNotification('❌ Network error: ' + error.message, true);
             btn.disabled = false;
             btn.innerText = isCurrentlyGated ? 'Make Free' : 'Gate Content';
         });
