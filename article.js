@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (accessRes.status === 402) {
             const errData = await accessRes.json();
             const price = errData.price || '0.00';
+            const recipient = (errData.accepts && errData.accepts[0] && (errData.accepts[0].recipient || errData.accepts[0].payTo)) || '';
             
             articleContainer.innerHTML = `
                 <a href="javascript:history.back()" class="back-link">
@@ -92,9 +93,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                         title: article.title,
                         description: article.summary,
                         imageUrl: new URL(article.image, window.location.origin).href,
+                        url: window.location.href,
                         tags: [article.category, 'Sports'],
                         price: price,
-                        currency: 'USDC'
+                        currency: 'USDC',
+                        recipient: recipient
                     },
                     { 
                         accessPath: '/api/nibgate/access?id=' + article.id,
