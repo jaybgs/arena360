@@ -140,7 +140,7 @@ app.get('/api/nibgate/access', async (req, res) => {
                 extra: {
                     name: 'GatewayWalletBatched',
                     version: '1',
-                    verifyingContract: '0x0000000000000000000000000000000000000000'
+                    verifyingContract: '0x0077777d7EBA4688BDeF3E311b846F25870A19B9'
                 }
             }]
         });
