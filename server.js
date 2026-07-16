@@ -18,46 +18,11 @@ const nibgate = createCircleGatewayServer({
     network: process.env.NIBGATE_PAYMENT_NETWORK || 'eip155:5042002'
 });
 
-app.use(express.static(__dirname));
 app.use(express.json());
 
-// Initialize Database
-async function initDB() {
-    if (!pool) return;
-    try {
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS articles (
-                id VARCHAR(255) PRIMARY KEY,
-                title TEXT,
-                description TEXT,
-                type VARCHAR(50),
-                price VARCHAR(50),
-                currency VARCHAR(10),
-                recipient VARCHAR(255),
-                path TEXT,
-                tags JSONB,
-                access_humans VARCHAR(50),
-                access_agents VARCHAR(50),
-                unlock_mode VARCHAR(50)
-            );
-        `);
-        console.log('Syncing database with nibgate.json...');
-        const raw = fs.readFileSync(path.join(__dirname, 'nibgate.json'), 'utf8');
-        const data = JSON.parse(raw);
-        for (const r of data.content) {
-            await pool.query(`
-                INSERT INTO articles (id, title, description, type, price, currency, recipient, path, tags, access_humans, access_agents, unlock_mode)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-                ON CONFLICT (id) DO NOTHING
-            `, [String(r.id), r.title, r.description, r.type, r.price, r.currency, r.recipient, r.path, JSON.stringify(r.tags), r.access.humans, r.access.agents, r.unlock.mode]);
-        }
-    } catch (err) {
-        console.error('DB Init Error:', err);
-    }
-}
-initDB();
-
-// Discovery manifest
+// IMPORTANT: nibgate.json route MUST be registered before express.static
+// because there is a physical nibgate.json file on disk that static would serve instead.
+// Discovery manifest - reads from Postgres, not the static file
 app.get('/nibgate.json', async (req, res) => {
     const protocol = req.headers['x-forwarded-proto'] || req.protocol;
     const host = req.get('host');
@@ -95,6 +60,46 @@ app.get('/nibgate.json', async (req, res) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
     res.json({ origin: actualOrigin, content });
 });
+
+app.use(express.static(__dirname));
+
+// Initialize Database
+async function initDB() {
+    if (!pool) return;
+    try {
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS articles (
+                id VARCHAR(255) PRIMARY KEY,
+                title TEXT,
+                description TEXT,
+                type VARCHAR(50),
+                price VARCHAR(50),
+                currency VARCHAR(10),
+                recipient VARCHAR(255),
+                path TEXT,
+                tags JSONB,
+                access_humans VARCHAR(50),
+                access_agents VARCHAR(50),
+                unlock_mode VARCHAR(50)
+            );
+        `);
+        console.log('Syncing database with nibgate.json...');
+        const raw = fs.readFileSync(path.join(__dirname, 'nibgate.json'), 'utf8');
+        const data = JSON.parse(raw);
+        for (const r of data.content) {
+            await pool.query(`
+                INSERT INTO articles (id, title, description, type, price, currency, recipient, path, tags, access_humans, access_agents, unlock_mode)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+                ON CONFLICT (id) DO NOTHING
+            `, [String(r.id), r.title, r.description, r.type, r.price, r.currency, r.recipient, r.path, JSON.stringify(r.tags), r.access.humans, r.access.agents, r.unlock.mode]);
+        }
+    } catch (err) {
+        console.error('DB Init Error:', err);
+    }
+}
+initDB();
+
+
 
 // API for access
 app.get('/api/nibgate/access', async (req, res) => {
