@@ -51,6 +51,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Check gating with backend
     try {
+        // If the user already unlocked this article in a previous session, restore it immediately
+        if (localStorage.getItem('nibgate:unlock:' + idParam)) {
+            renderFullArticle();
+            return;
+        }
+
         const accessRes = await fetch(`/api/nibgate/access?id=${idParam}`);
         if (accessRes.status === 402) {
             const errData = await accessRes.json();
