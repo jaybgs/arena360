@@ -30,7 +30,9 @@ app.get('/nibgate.json', async (req, res) => {
     
     let content = [];
     if (pool) {
-        const query = req.query.all ? 'SELECT * FROM articles' : "SELECT * FROM articles WHERE access_humans = 'paid'";
+        const query = req.query.all
+            ? 'SELECT * FROM articles ORDER BY CAST(id AS INTEGER)'
+            : "SELECT * FROM articles WHERE access_humans = 'paid' ORDER BY CAST(id AS INTEGER)";
         const dbRes = await pool.query(query);
         content = dbRes.rows.map(r => ({
             id: r.id,
