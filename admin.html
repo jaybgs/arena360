@@ -16,7 +16,7 @@
         }
         
         .login-card {
-            background: var(--bg-card);
+            background: var(--card-bg);
             padding: 40px;
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
@@ -27,11 +27,11 @@
         
         .login-card h2 {
             margin-bottom: 10px;
-            color: var(--primary-color);
+            color: var(--accent);
         }
         
         .login-card p {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             margin-bottom: 30px;
             font-size: 0.9rem;
         }
@@ -40,8 +40,8 @@
             width: 100%;
             padding: 15px;
             border: 2px solid var(--border-color);
-            background: var(--bg-color);
-            color: var(--text-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             border-radius: 8px;
             margin-bottom: 20px;
             font-family: 'Inter', sans-serif;
@@ -51,15 +51,15 @@
         }
         
         .login-input:focus {
-            border-color: var(--primary-color);
+            border-color: var(--accent);
         }
 
         .login-btn {
             width: 100%;
             padding: 18px;
-            background: var(--primary-color);
-            color: #000000;
-            border: 3px solid #000000;
+            background: var(--accent);
+            color: #ffffff;
+            border: none;
             border-radius: 8px;
             font-weight: 900;
             font-size: 1.2rem;
@@ -71,6 +71,7 @@
         }
 
         .login-btn:hover {
+            background: var(--accent-hover);
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
@@ -80,9 +81,9 @@
             max-width: 1200px;
             margin: 40px auto;
             padding: 30px;
-            background: var(--bg-card);
+            background: var(--card-bg);
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: var(--shadow);
         }
         
         .admin-header {
@@ -108,7 +109,7 @@
         .admin-table th {
             font-family: 'Outfit', sans-serif;
             font-weight: 600;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             text-transform: uppercase;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
@@ -117,11 +118,12 @@
         .admin-table td {
             font-family: 'Inter', sans-serif;
             vertical-align: middle;
+            color: var(--text-primary);
         }
         
         .article-title {
             font-weight: 600;
-            color: var(--text-color);
+            color: var(--text-primary);
             max-width: 300px;
             white-space: nowrap;
             overflow: hidden;
@@ -132,8 +134,8 @@
             width: 80px;
             padding: 8px;
             border: 1px solid var(--border-color);
-            background: var(--bg-color);
-            color: var(--text-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
             border-radius: 6px;
             font-family: 'Inter', sans-serif;
             text-align: right;
@@ -158,11 +160,6 @@
             font-weight: 600;
             font-size: 0.85rem;
             transition: all 0.2s ease;
-        }
-        
-        .save-btn {
-            background: var(--primary-color);
-            color: #000;
         }
         
         .toggle-btn {
@@ -236,9 +233,9 @@
         <div class="admin-header">
             <div>
                 <h2>Manage Content Gating</h2>
-                <p style="color: var(--text-muted); margin-top: 5px;">Configure access rules and prices for all articles.</p>
+                <p style="color: var(--text-secondary); margin-top: 5px;">Configure access rules and prices for all articles.</p>
             </div>
-            <button id="logoutBtn" class="action-btn" style="background:var(--bg-color); color:var(--text-color); border:1px solid var(--border-color);">Logout</button>
+            <button id="logoutBtn" class="action-btn" style="background:var(--bg-secondary); color:var(--text-primary); border:1px solid var(--border-color);">Logout</button>
         </div>
         <table class="admin-table">
             <thead>
