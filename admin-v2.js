@@ -156,7 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (res.ok) {
                 await loadArticles();
             } else {
-                alert('Failed to update. Unauthorized?');
+                const errorData = await res.json().catch(() => ({}));
+                alert('Failed to update: ' + (errorData.details || errorData.error || res.statusText));
                 if (btnEl) btnEl.disabled = false;
             }
         } catch (error) {

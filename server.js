@@ -164,8 +164,13 @@ app.post('/api/admin/update-gate', async (req, res) => {
             paramIndex++;
         }
         updateQuery += ' WHERE id = $2';
-        await pool.query(updateQuery, params);
-        return res.json({ success: true });
+        try {
+            await pool.query(updateQuery, params);
+            return res.json({ success: true, method: 'postgres' });
+        } catch (dbErr) {
+            console.error('Postgres Update Error:', dbErr);
+            return res.status(500).json({ error: 'Database error', details: dbErr.message });
+        }
     } else {
         const filePath = path.join(__dirname, 'nibgate.json');
         const raw = fs.readFileSync(filePath, 'utf8');
@@ -182,10 +187,23 @@ app.post('/api/admin/update-gate', async (req, res) => {
                 resource.recipient = String(recipient);
             }
             fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-            return res.json({ success: true });
+            return res.json({ success: true, method: 'fs' });
         }
     }
     res.status(404).send('Not found');
+});
+
+// Diagnostic endpoint to check DB status
+app.get('/api/health', async (req, res) => {
+    if (!pool) {
+        return res.json({ status: 'ok', database: 'none', message: 'DATABASE_URL not configured, using JSON file' });
+    }
+    try {
+        const check = await pool.query('SELECT COUNT(*) FROM articles');
+        return res.json({ status: 'ok', database: 'postgres', rows: check.rows[0].count });
+    } catch (err) {
+        return res.status(500).json({ status: 'error', database: 'postgres', error: err.message });
+    }
 });
 
 // Admin Route
