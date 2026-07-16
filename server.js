@@ -41,17 +41,15 @@ async function initDB() {
                 unlock_mode VARCHAR(50)
             );
         `);
-        const res = await pool.query('SELECT COUNT(*) FROM articles');
-        if (parseInt(res.rows[0].count) === 0) {
-            console.log('Seeding database from nibgate.json...');
-            const raw = fs.readFileSync(path.join(__dirname, 'nibgate.json'), 'utf8');
-            const data = JSON.parse(raw);
-            for (const r of data.content) {
-                await pool.query(`
-                    INSERT INTO articles (id, title, description, type, price, currency, recipient, path, tags, access_humans, access_agents, unlock_mode)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-                `, [r.id, r.title, r.description, r.type, r.price, r.currency, r.recipient, r.path, JSON.stringify(r.tags), r.access.humans, r.access.agents, r.unlock.mode]);
-            }
+        console.log('Syncing database with nibgate.json...');
+        const raw = fs.readFileSync(path.join(__dirname, 'nibgate.json'), 'utf8');
+        const data = JSON.parse(raw);
+        for (const r of data.content) {
+            await pool.query(`
+                INSERT INTO articles (id, title, description, type, price, currency, recipient, path, tags, access_humans, access_agents, unlock_mode)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+                ON CONFLICT (id) DO NOTHING
+            `, [String(r.id), r.title, r.description, r.type, r.price, r.currency, r.recipient, r.path, JSON.stringify(r.tags), r.access.humans, r.access.agents, r.unlock.mode]);
         }
     } catch (err) {
         console.error('DB Init Error:', err);
