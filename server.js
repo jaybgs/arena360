@@ -134,6 +134,7 @@ app.get('/api/nibgate/access', async (req, res) => {
             accepts: [{
                 asset: resource.currency || "USDC",
                 amount: String(Math.floor(parseFloat(resource.price || "0") * 1000000)),
+                maxTimeoutSeconds: 86400,
                 payTo: resource.recipient || "0x0000000000000000000000000000000000000000",
                 recipient: resource.recipient || "0x0000000000000000000000000000000000000000",
                 network: "eip155:5042002",
