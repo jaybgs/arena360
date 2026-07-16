@@ -1,21 +1,27 @@
 "use strict";
-(() => {
+var Nibgate = (() => {
   var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __esm = (fn, res, err) => function __init() {
-    if (err) throw err[0];
-    try {
-      return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
-    } catch (e) {
-      throw err = [e], e;
-    }
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __esm = (fn, res) => function __init() {
+    return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
   };
   var __export = (target, all) => {
     for (var name in all)
       __defProp(target, name, { get: all[name], enumerable: true });
   };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-  // node_modules/@nibgate/sdk/src/browser/json.js
+  // src/browser/json.js
   function jsonReplacer(_key, value) {
     if (typeof value === "bigint") return value.toString();
     return value;
@@ -24,11 +30,12 @@
     return JSON.stringify(value, jsonReplacer);
   }
   var init_json = __esm({
-    "node_modules/@nibgate/sdk/src/browser/json.js"() {
+    "src/browser/json.js"() {
+      "use strict";
     }
   });
 
-  // node_modules/@nibgate/sdk/src/browser/gateway.js
+  // src/browser/gateway.js
   var gateway_exports = {};
   __export(gateway_exports, {
     createCircleGatewayBrowserAdapter: () => createCircleGatewayBrowserAdapter
@@ -107,13 +114,58 @@
   }
   var runtimeImport;
   var init_gateway = __esm({
-    "node_modules/@nibgate/sdk/src/browser/gateway.js"() {
+    "src/browser/gateway.js"() {
+      "use strict";
       init_json();
       runtimeImport = new Function("specifier", "return import(specifier)");
     }
   });
 
-  // node_modules/@nibgate/sdk/src/core/payment.js
+  // src/browser/index.js
+  var index_exports = {};
+  __export(index_exports, {
+    ACCESS_MODES: () => ACCESS_MODES,
+    CONTENT_TYPES: () => CONTENT_TYPES,
+    NIBGATE_CONTENT_HASH_NAMESPACE: () => NIBGATE_CONTENT_HASH_NAMESPACE,
+    NIBGATE_CONTENT_SETTING_FIELDS: () => NIBGATE_CONTENT_SETTING_FIELDS,
+    NIBGATE_REPUTATION_ABI: () => NIBGATE_REPUTATION_ABI,
+    NIBGATE_REPUTATION_CHAIN_ID: () => NIBGATE_REPUTATION_CHAIN_ID,
+    NIBGATE_REPUTATION_CHAIN_NAME: () => NIBGATE_REPUTATION_CHAIN_NAME,
+    NIBGATE_REPUTATION_CONTRACT: () => NIBGATE_REPUTATION_CONTRACT,
+    NIBGATE_REPUTATION_RPC_URL: () => NIBGATE_REPUTATION_RPC_URL,
+    PAYMENT_RAILS: () => PAYMENT_RAILS,
+    UNLOCK_MODES: () => UNLOCK_MODES,
+    checkResourceAccess: () => checkResourceAccess,
+    contentRatingHash: () => contentRatingHash,
+    createCircleGatewayBrowserAdapter: () => createCircleGatewayBrowserAdapter2,
+    createEvmGatewayUnlock: () => createEvmGatewayUnlock,
+    createGate: () => createGate,
+    createNibgate: () => createNibgate,
+    createNibgateContentSettings: () => createNibgateContentSettings,
+    createOnchainRating: () => createOnchainRating,
+    createTransferCheckout: () => createTransferCheckout,
+    createWalletCheckout: () => createWalletCheckout,
+    mountRatingUI: () => mountRatingUI,
+    nibgate: () => nibgate,
+    normalizeAccessPolicy: () => normalizeAccessPolicy,
+    normalizeContentType: () => normalizeContentType,
+    normalizePaymentRail: () => normalizePaymentRail,
+    normalizeResource: () => normalizeResource,
+    normalizeUnlockPolicy: () => normalizeUnlockPolicy,
+    payAndUnlockResource: () => payAndUnlockResource,
+    payWithPaymentSignature: () => payWithPaymentSignature,
+    payWithTransfer: () => payWithTransfer,
+    rateContentOnchain: () => rateContentOnchain,
+    rateResource: () => rateResource,
+    reviewTextHash: () => reviewTextHash,
+    settingsToAccessPolicy: () => settingsToAccessPolicy,
+    settingsToUnlockPolicy: () => settingsToUnlockPolicy,
+    setupResourcePage: () => setupResourcePage,
+    trackResourcePage: () => trackResourcePage,
+    validateResourceMetadata: () => validateResourceMetadata
+  });
+
+  // src/core/payment.js
   var PAYMENT_RAILS = ["gateway", "transfer"];
   function normalizePaymentRail(value, fallback = "gateway") {
     const rail = String(value || "").trim().toLowerCase().replace(/[-\s]+/g, "_");
@@ -122,7 +174,7 @@
     return PAYMENT_RAILS.includes(rail) ? rail : fallback;
   }
 
-  // node_modules/@nibgate/sdk/src/core/resource.js
+  // src/core/resource.js
   var CONTENT_TYPES = ["music", "video", "article", "image"];
   var TYPE_ALIASES = {
     audio: "music",
@@ -243,37 +295,12 @@
     };
   }
 
-  // node_modules/@nibgate/sdk/src/core/rating.js
-  function normalizeRating(input = {}) {
-    const value = typeof input === "number" ? input : input.rating ?? input.stars ?? input.ratingValue ?? input.score;
-    const numeric = Number.parseFloat(value);
-    const ratingValue = Number.isFinite(numeric) ? Math.max(1, Math.min(50, numeric <= 5 ? Math.round(numeric * 10) : Math.round(numeric))) : null;
-    return {
-      ...input,
-      rating: ratingValue ? ratingValue / 10 : void 0,
-      ratingValue: ratingValue || void 0
-    };
-  }
-  function ratingMessage(resource, rating = {}, options = {}) {
-    const normalized = normalizeResource(resource);
-    const normalizedRating = normalizeRating(rating);
-    const value = normalizedRating.ratingValue || 0;
-    return [
-      "Nibgate content rating",
-      `site:${options.siteDomain || options.domain || normalized.siteDomain || normalized.domain || ""}`,
-      `content:${normalized.externalId || normalized.id}`,
-      `url:${normalized.url || options.url || ""}`,
-      `rating:${value}`,
-      "I confirm this rating is tied to my unlock/payment proof."
-    ].join("\n");
-  }
-
-  // node_modules/@nibgate/sdk/src/browser/env.js
+  // src/browser/env.js
   function browserWindow() {
     return typeof window === "undefined" ? null : window;
   }
 
-  // node_modules/@nibgate/sdk/src/browser/events.js
+  // src/browser/events.js
   function queueEvent(eventName, payload) {
     const win = browserWindow();
     if (!win) return false;
@@ -323,7 +350,7 @@
     };
   }
 
-  // node_modules/@nibgate/sdk/src/browser/storage.js
+  // src/browser/storage.js
   function unlockStorageKey(resource) {
     return `nibgate:unlock:${resource.id || resource.path || resource.url || "content"}`;
   }
@@ -385,175 +412,14 @@
     }
   }
 
-  // node_modules/@nibgate/sdk/src/browser/index.js
-  init_json();
-
-  // node_modules/@nibgate/sdk/src/browser/reputation.js
-  var RATE_CONTENT_SELECTOR = "0xc62fad09";
-  var ZERO_HASH = `0x${"0".repeat(64)}`;
-  var NIBGATE_REPUTATION_CONTRACT = "0x9f27fd62e75f86a3c7addfdba443aab1f930e281";
-  function stripHex(value = "") {
-    return String(value || "").replace(/^0x/i, "").toLowerCase();
-  }
-  function wordRight(hex = "") {
-    const clean = stripHex(hex);
-    if (clean.length > 64) throw new Error("ABI word is too long.");
-    return clean.padEnd(64, "0");
-  }
-  function numberWord(value = 0) {
-    return Number(value || 0).toString(16).padStart(64, "0");
-  }
-  function utf8Hex(value = "") {
-    return Array.from(new TextEncoder().encode(String(value || ""))).map((byte) => byte.toString(16).padStart(2, "0")).join("");
-  }
-  function encodeString(value = "") {
-    const hex = utf8Hex(value);
-    const byteLength = hex.length / 2;
-    const paddedLength = Math.ceil(byteLength / 32) * 64;
-    return numberWord(byteLength) + hex.padEnd(paddedLength, "0");
-  }
-  function encodeRateContent({ contentId, ratingValue, reviewHash, unlockRef }) {
-    return RATE_CONTENT_SELECTOR + wordRight(contentId) + numberWord(ratingValue) + wordRight(reviewHash || ZERO_HASH) + numberWord(128) + encodeString(unlockRef || "");
-  }
-  function contentRatingHash(_resource, options = {}) {
-    const contentId = options.contentId || options.contentHash;
-    if (!contentId) {
-      throw new Error("contentId/contentHash is required. Use the Nibgate backend prepare endpoint or pass a known content hash.");
-    }
-    return contentId;
-  }
-  async function prepareOnchainRating(resource, options = {}) {
-    if (options.contentId || options.contentHash) return { contentId: options.contentId || options.contentHash };
-    const prepareUrl = options.prepareUrl || options.indexUrl?.replace(/\/index$/, "/prepare");
-    if (!prepareUrl) throw new Error("contentId/contentHash or prepareUrl is required for onchain rating.");
-    const response = await fetch(prepareUrl, {
-      method: "POST",
-      headers: { "content-type": "application/json", ...options.indexHeaders || {} },
-      body: JSON.stringify({
-        siteId: options.siteId,
-        token: options.token,
-        resource,
-        url: resource.url,
-        path: resource.path
-      })
-    });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok || !payload.contentHash) throw new Error(payload.error || "Could not prepare Nibgate onchain rating.");
-    return payload;
-  }
-  async function rateContentOnchain(resource, options = {}) {
-    const normalized = normalizeResource(resource);
-    const rating = normalizeRating(options.rating ?? options.stars ?? options);
-    if (!rating.ratingValue) throw new Error("Rating must be between 0.1 and 5 stars.");
-    const provider = options.provider || globalThis?.ethereum;
-    if (!provider?.request) throw new Error("Connect an EVM wallet to rate this content onchain.");
-    const contractAddress = options.contractAddress || options.reputationContract || NIBGATE_REPUTATION_CONTRACT;
-    if (!contractAddress) throw new Error("Nibgate reputation contract address is not configured.");
-    const accounts = await provider.request({ method: "eth_requestAccounts" });
-    const walletAddress = Array.isArray(accounts) ? accounts[0] || "" : "";
-    if (!walletAddress) throw new Error("No wallet account selected.");
-    const prepared = await prepareOnchainRating(normalized, options);
-    const contentId = prepared.contentHash || prepared.contentId || contentRatingHash(normalized, options);
-    const reviewHash = options.reviewHash || ZERO_HASH;
-    const unlockRef = String(options.unlockRef || options.paymentId || options.txHash || "");
-    const data = encodeRateContent({ contentId, ratingValue: rating.ratingValue, reviewHash, unlockRef });
-    const txHash = await provider.request({
-      method: "eth_sendTransaction",
-      params: [{
-        from: walletAddress,
-        to: contractAddress,
-        data
-      }]
-    });
-    const payload = payloadWithResource(normalized, {
-      rating: rating.rating,
-      ratingValue: rating.ratingValue,
-      walletAddress,
-      txHash,
-      contentHash: contentId,
-      reviewHash,
-      proofType: "onchain_pending",
-      proof: unlockRef,
-      paymentId: options.paymentId,
-      actor: options.actor || "human"
-    });
-    emit("content_rating", payload);
-    if (options.indexUrl) {
-      await fetch(options.indexUrl, {
-        method: "POST",
-        headers: { "content-type": "application/json", ...options.indexHeaders || {} },
-        body: JSON.stringify({
-          siteId: options.siteId,
-          token: options.token,
-          txHash,
-          resource: normalized,
-          url: normalized.url,
-          path: normalized.path,
-          actor: options.actor || "human"
-        })
-      }).catch(() => null);
-    }
-    return { txHash, walletAddress, contentId, ratingValue: rating.ratingValue, reviewHash };
-  }
-
-  // node_modules/@nibgate/sdk/src/browser/transfer.js
-  function createTransferCheckout(resource, options = {}) {
-    const normalized = normalizeResource({ ...resource, paymentRail: "transfer" });
-    const sendTransfer = options.sendTransfer || options.transfer;
-    if (typeof sendTransfer !== "function") {
-      throw new Error("createTransferCheckout requires sendTransfer({ resource, recipient, amount, currency, network }) and a server verifyTransfer hook.");
-    }
-    return {
-      resource: normalized,
-      async pay(input = {}) {
-        const recipient = normalized.recipient || normalized.payTo;
-        const amount = String(normalized.price || normalized.amount || "0");
-        const currency = normalized.currency || "USDC";
-        const network = options.network || input.challenge?.accepts?.[0]?.network || "eip155:5042002";
-        const result = await sendTransfer({ resource: normalized, recipient, amount, currency, network, challenge: input.challenge });
-        const txHash = result?.txHash || result?.hash || result?.transactionHash || result?.paymentId || "";
-        if (!txHash) throw new Error("Transfer checkout did not return a txHash.");
-        return {
-          paymentSignature: txHash,
-          signature: txHash,
-          memo: result.memo || "",
-          metadata: {
-            paymentProvider: "direct-transfer",
-            paymentId: txHash,
-            txHash,
-            recipient,
-            amount: Number(amount),
-            currency,
-            network,
-            ...result.metadata || result
-          }
-        };
-      }
-    };
-  }
-  async function payWithTransfer(resource, options = {}) {
-    const checkout = options.checkout || createTransferCheckout(resource, options).pay;
-    const result = await checkout({ resource: normalizeResource(resource), challenge: options.challenge || null });
-    const txHash = result?.metadata?.txHash || result?.txHash || result?.paymentSignature || result?.signature || "";
-    if (!txHash) throw new Error("Transfer checkout did not return a txHash.");
-    return checkResourceAccess(resource, {
-      ...options,
-      headers: {
-        ...options.headers || {},
-        "x-nibgate-transfer-tx": txHash
-      },
-      payment: result.metadata || { paymentProvider: "direct-transfer", txHash, paymentId: txHash }
-    });
-  }
-
-  // node_modules/@nibgate/sdk/src/browser/index.js
-  async function createCircleGatewayBrowserAdapter2(options = {}) {
-    const gateway = await Promise.resolve().then(() => (init_gateway(), gateway_exports));
-    return gateway.createCircleGatewayBrowserAdapter(options);
+  // src/browser/gate.js
+  var defaultClient = null;
+  function setDefaultClient(client) {
+    defaultClient = client;
   }
   function createGate(resource, options = {}) {
     const normalized = normalizeResource(resource);
-    const client = options.client || nibgate;
+    const client = options.client || defaultClient;
     return {
       resource: normalized,
       content(extra = {}) {
@@ -597,18 +463,11 @@
       }
     };
   }
-  function rateResource(resource, rating = {}, extra = {}) {
-    const normalized = normalizeResource(resource);
-    const normalizedRating = normalizeRating(rating);
-    const payload = {
-      ...extra,
-      ...normalizedRating,
-      ratingMessage: extra.ratingMessage || rating.message || rating.ratingMessage || ratingMessage(normalized, normalizedRating, extra),
-      ratingSignature: extra.ratingSignature || rating.signature || rating.ratingSignature || void 0,
-      resource: normalized
-    };
-    return emit("content_rating", payload);
-  }
+
+  // src/browser/access.js
+  init_json();
+
+  // src/browser/track.js
   function trackResourcePage(resource, options = {}) {
     const item = createGate(resource, options.gateOptions || {});
     const validation = validateResourceMetadata(item.resource, options.validation || {});
@@ -624,6 +483,29 @@
     });
     return item;
   }
+  function setupResourcePage(resource, options = {}) {
+    const item = trackResourcePage(resource, options);
+    const win = browserWindow();
+    if (!win) return item;
+    const button = typeof options.button === "string" ? win.document.querySelector(options.button) : options.button;
+    const statusElement = typeof options.status === "string" ? win.document.querySelector(options.status) : options.status;
+    const setStatus = options.onStatus || ((message) => {
+      if (statusElement) statusElement.textContent = message || "";
+    });
+    if (button) {
+      button.addEventListener("click", async () => {
+        button.disabled = true;
+        try {
+          await checkResourceAccess(resource, { ...options, onStatus: setStatus });
+        } finally {
+          button.disabled = false;
+        }
+      });
+    }
+    return item;
+  }
+
+  // src/browser/access.js
   async function checkResourceAccess(resource, options = {}) {
     const item = createGate(resource, options.gateOptions || {});
     const accessPath = options.accessPath || item.resource.accessPath || "/api/nibgate/access";
@@ -645,12 +527,11 @@
       item.track("payment_challenge_returned", { source: options.source, challenge: payload, resource: item.resource });
       status(options.challengeMessage || "Payment challenge returned. Continue with checkout.");
       if (typeof options.createPaymentSignature === "function" || typeof options.checkout === "function") {
-        const paymentResult = await payWithPaymentSignature(resource, {
+        return payWithPaymentSignature(resource, {
           ...options,
           challenge: payload,
           paymentRequiredHeader: response.headers.get("PAYMENT-REQUIRED") || response.headers.get("payment-required") || ""
         });
-        return paymentResult;
       }
       if (options.autoPay && options.payPath) {
         const paymentResult = await payAndUnlockResource(resource, options);
@@ -740,6 +621,42 @@
     status(options.paymentSuccessMessage || "Payment verified. Content unlocked.");
     return { ok: true, status: response.status, payload, payment, resource: item.resource, response };
   }
+  async function payAndUnlockResource(resource, options = {}) {
+    const item = createGate(resource, options.gateOptions || {});
+    const payPath = options.payPath || item.resource.payPath || "/api/nibgate/pay";
+    const status = typeof options.onStatus === "function" ? options.onStatus : () => {
+    };
+    status(options.paymentMessage || "Starting payment...");
+    item.unlockStarted({ source: options.source, paymentProvider: options.paymentProvider || "circle-gateway" });
+    const response = await fetch(payPath, {
+      method: options.payMethod || "POST",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+        ...options.payHeaders || {}
+      },
+      body: JSON.stringify({ resource: item.resource, ...options.payPayload || {} })
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || !payload.ok) {
+      item.track("payment_failed", { source: options.source, status: response.status, error: payload.error || "Payment failed", detail: payload.detail || "" });
+      status(payload.detail || payload.error || options.paymentErrorMessage || "Payment failed.");
+      return { ok: false, status: response.status, payload, resource: item.resource, response };
+    }
+    const payment = payload.payment || {
+      paymentProvider: options.paymentProvider || "circle-gateway",
+      paymentId: payload.paymentId || `nibgate_payment_${Date.now()}`,
+      amount: Number(item.resource.price || 0),
+      revenue: Number(item.resource.price || 0),
+      currency: item.resource.currency || "USDC"
+    };
+    storePaymentProof(item.resource, payload.unlockProof);
+    item.markUnlocked(payment);
+    status(options.paymentSuccessMessage || "Payment verified. Content unlocked.");
+    return { ok: true, status: response.status, payload, payment, resource: item.resource, response };
+  }
+
+  // src/browser/checkout.js
   function setElementText(target, message) {
     const win = browserWindow();
     if (!target || !win) return;
@@ -783,11 +700,39 @@
       if (element) element.addEventListener("click", () => unlock().catch((error) => status(error.message || "Checkout failed.")));
       return { unlock };
     }
+    return { resource: normalized, unlock, mount };
+  }
+
+  // src/core/rating.js
+  function normalizeRating(input = {}) {
+    const value = typeof input === "number" ? input : input.rating ?? input.stars ?? input.ratingValue ?? input.score;
+    const numeric = Number.parseFloat(value);
+    const ratingValue = Number.isFinite(numeric) ? Math.max(1, Math.min(50, numeric <= 5 ? Math.round(numeric * 10) : Math.round(numeric))) : null;
     return {
-      resource: normalized,
-      unlock,
-      mount
+      ...input,
+      rating: ratingValue ? ratingValue / 10 : void 0,
+      ratingValue: ratingValue || void 0
     };
+  }
+  function ratingMessage(resource, rating = {}, options = {}) {
+    const normalized = normalizeResource(resource);
+    const normalizedRating = normalizeRating(rating);
+    const value = normalizedRating.ratingValue || 0;
+    return [
+      "Nibgate content rating",
+      `site:${options.siteDomain || options.domain || normalized.siteDomain || normalized.domain || ""}`,
+      `content:${normalized.externalId || normalized.id}`,
+      `url:${normalized.url || options.url || ""}`,
+      `rating:${value}`,
+      "I confirm this rating is tied to my unlock/payment proof."
+    ].join("\n");
+  }
+
+  // src/browser/evm-gateway.js
+  init_json();
+  async function createCircleGatewayBrowserAdapter2(options = {}) {
+    const gateway = await Promise.resolve().then(() => (init_gateway(), gateway_exports));
+    return gateway.createCircleGatewayBrowserAdapter(options);
   }
   function createEvmGatewayUnlock(resource, options = {}) {
     const item = createGate(resource, options.gateOptions || {});
@@ -860,10 +805,7 @@
         const evm = provider();
         if (evm?.request && walletAddress) {
           try {
-            await evm.request({
-              method: "wallet_revokePermissions",
-              params: [{ eth_accounts: {} }]
-            });
+            await evm.request({ method: "wallet_revokePermissions", params: [{ eth_accounts: {} }] });
           } catch (_error) {
           }
         }
@@ -883,10 +825,7 @@
         network,
         signer: {
           address: walletAddress,
-          signTypedData: (typedData) => evm.request({
-            method: "eth_signTypedData_v4",
-            params: [walletAddress, stringifyJson(typedData)]
-          })
+          signTypedData: (typedData) => evm.request({ method: "eth_signTypedData_v4", params: [walletAddress, stringifyJson(typedData)] })
         },
         clientModule: options.circleClientModule,
         clientModuleUrl: options.circleClientModuleUrl
@@ -951,6 +890,150 @@
     if (options.autoMount !== false) mount();
     return controller;
   }
+
+  // src/browser/reputation.js
+  var RATE_CONTENT_SELECTOR = "0xc62fad09";
+  var ZERO_HASH = `0x${"0".repeat(64)}`;
+  var NIBGATE_CONTENT_HASH_NAMESPACE = "nibgate:content:v1";
+  var NIBGATE_REPUTATION_CHAIN_ID = 5042002;
+  var NIBGATE_REPUTATION_CHAIN_NAME = "Arc Testnet";
+  var NIBGATE_REPUTATION_RPC_URL = "https://rpc.testnet.arc.network";
+  var NIBGATE_REPUTATION_CONTRACT = "0x9f27fd62e75f86a3c7addfdba443aab1f930e281";
+  var NIBGATE_REPUTATION_ABI = [
+    {
+      type: "function",
+      name: "rateContent",
+      stateMutability: "nonpayable",
+      inputs: [
+        { name: "contentId", type: "bytes32" },
+        { name: "rating", type: "uint8" },
+        { name: "reviewHash", type: "bytes32" },
+        { name: "unlockRef", type: "string" }
+      ],
+      outputs: []
+    }
+  ];
+  function stripHex(value = "") {
+    return String(value || "").replace(/^0x/i, "").toLowerCase();
+  }
+  function wordRight(hex = "") {
+    const clean = stripHex(hex);
+    if (clean.length > 64) throw new Error("ABI word is too long.");
+    return clean.padEnd(64, "0");
+  }
+  function numberWord(value = 0) {
+    return Number(value || 0).toString(16).padStart(64, "0");
+  }
+  function utf8Hex(value = "") {
+    return Array.from(new TextEncoder().encode(String(value || ""))).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+  }
+  function encodeString(value = "") {
+    const hex = utf8Hex(value);
+    const byteLength = hex.length / 2;
+    const paddedLength = Math.ceil(byteLength / 32) * 64;
+    return numberWord(byteLength) + hex.padEnd(paddedLength, "0");
+  }
+  function encodeRateContent({ contentId, ratingValue, reviewHash, unlockRef }) {
+    return RATE_CONTENT_SELECTOR + wordRight(contentId) + numberWord(ratingValue) + wordRight(reviewHash || ZERO_HASH) + numberWord(128) + encodeString(unlockRef || "");
+  }
+  function contentRatingHash(_resource, options = {}) {
+    const contentId = options.contentId || options.contentHash;
+    if (!contentId) {
+      throw new Error("contentId/contentHash is required. Use the Nibgate backend prepare endpoint or pass a known content hash.");
+    }
+    return contentId;
+  }
+  function reviewTextHash(review = "") {
+    if (!review) return ZERO_HASH;
+    throw new Error("Text review hashing is not available in direct-browser mode. Pass reviewHash from your app/backend.");
+  }
+  async function prepareOnchainRating(resource, options = {}) {
+    if (options.contentId || options.contentHash) return { contentId: options.contentId || options.contentHash };
+    const prepareUrl = options.prepareUrl || options.indexUrl?.replace(/\/index$/, "/prepare");
+    if (!prepareUrl) throw new Error("contentId/contentHash or prepareUrl is required for onchain rating.");
+    const response = await fetch(prepareUrl, {
+      method: "POST",
+      headers: { "content-type": "application/json", ...options.indexHeaders || {} },
+      body: JSON.stringify({
+        siteId: options.siteId,
+        token: options.token,
+        resource,
+        url: resource.url,
+        path: resource.path
+      })
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok || !payload.contentHash) throw new Error(payload.error || "Could not prepare Nibgate onchain rating.");
+    return payload;
+  }
+  async function rateContentOnchain(resource, options = {}) {
+    const normalized = normalizeResource(resource);
+    const rating = normalizeRating(options.rating ?? options.stars ?? options);
+    if (!rating.ratingValue) throw new Error("Rating must be between 0.1 and 5 stars.");
+    const provider = options.provider || globalThis?.ethereum;
+    if (!provider?.request) throw new Error("Connect an EVM wallet to rate this content onchain.");
+    const contractAddress = options.contractAddress || options.reputationContract || NIBGATE_REPUTATION_CONTRACT;
+    if (!contractAddress) throw new Error("Nibgate reputation contract address is not configured.");
+    const accounts = await provider.request({ method: "eth_requestAccounts" });
+    const walletAddress = Array.isArray(accounts) ? accounts[0] || "" : "";
+    if (!walletAddress) throw new Error("No wallet account selected.");
+    const prepared = await prepareOnchainRating(normalized, options);
+    const contentId = prepared.contentHash || prepared.contentId || contentRatingHash(normalized, options);
+    const reviewHash = options.reviewHash || ZERO_HASH;
+    const unlockRef = String(options.unlockRef || options.paymentId || options.txHash || "");
+    const data = encodeRateContent({ contentId, ratingValue: rating.ratingValue, reviewHash, unlockRef });
+    const txHash = await provider.request({
+      method: "eth_sendTransaction",
+      params: [{
+        from: walletAddress,
+        to: contractAddress,
+        data
+      }]
+    });
+    const payload = payloadWithResource(normalized, {
+      rating: rating.rating,
+      ratingValue: rating.ratingValue,
+      walletAddress,
+      txHash,
+      contentHash: contentId,
+      reviewHash,
+      proofType: "onchain_pending",
+      proof: unlockRef,
+      paymentId: options.paymentId,
+      actor: options.actor || "human"
+    });
+    emit("content_rating", payload);
+    if (options.indexUrl) {
+      await fetch(options.indexUrl, {
+        method: "POST",
+        headers: { "content-type": "application/json", ...options.indexHeaders || {} },
+        body: JSON.stringify({
+          siteId: options.siteId,
+          token: options.token,
+          txHash,
+          resource: normalized,
+          url: normalized.url,
+          path: normalized.path,
+          actor: options.actor || "human"
+        })
+      }).catch(() => null);
+    }
+    return { txHash, walletAddress, contentId, ratingValue: rating.ratingValue, reviewHash };
+  }
+
+  // src/browser/rating-ui.js
+  function rateResource(resource, rating = {}, extra = {}) {
+    const normalized = normalizeResource(resource);
+    const normalizedRating = normalizeRating(rating);
+    const payload = {
+      ...extra,
+      ...normalizedRating,
+      ratingMessage: extra.ratingMessage || rating.message || rating.ratingMessage || ratingMessage(normalized, normalizedRating, extra),
+      ratingSignature: extra.ratingSignature || rating.signature || rating.ratingSignature || void 0,
+      resource: normalized
+    };
+    return emit("content_rating", payload);
+  }
   function createOnchainRating(resource, options = {}) {
     const item = createGate(resource, options.gateOptions || {});
     const win = browserWindow();
@@ -995,14 +1078,7 @@
         const paymentId = input.paymentId || options.paymentId || (typeof options.getPaymentId === "function" ? options.getPaymentId() : payment?.paymentId);
         const unlockRef = input.unlockRef || options.unlockRef || (typeof options.getUnlockRef === "function" ? options.getUnlockRef() : null) || paymentId || payment?.txHash || payment?.transactionHash || "";
         setStatus(options.pendingMessage || "Send the onchain rating transaction...");
-        const result = await rateContentOnchain(item.resource, {
-          ...options,
-          ...input,
-          rating,
-          paymentId,
-          unlockRef,
-          source
-        });
+        const result = await rateContentOnchain(item.resource, { ...options, ...input, rating, paymentId, unlockRef, source });
         setStatus(options.successMessage || "Rating sent to Nibgate reputation.");
         if (typeof options.onRated === "function") options.onRated(result);
         return result;
@@ -1053,7 +1129,7 @@
       btn.addEventListener("click", () => {
         selectedRating = value;
         starButtons.forEach((b, i) => b.style.color = i < value ? "#f5b342" : "#ccc");
-        rate(item.resource, { rating: value }).catch(() => {
+        rateResource(item.resource, { rating: value }).catch(() => {
         });
       });
       container.appendChild(btn);
@@ -1071,71 +1147,60 @@
       selectedRating = value;
       starButtons.forEach((b, i) => b.style.color = i < value ? "#f5b342" : "#ccc");
     }
+    return { resource: item.resource, container, setRating, rate };
+  }
+
+  // src/browser/transfer.js
+  function createTransferCheckout(resource, options = {}) {
+    const normalized = normalizeResource({ ...resource, paymentRail: "transfer" });
+    const sendTransfer = options.sendTransfer || options.transfer;
+    if (typeof sendTransfer !== "function") {
+      throw new Error("createTransferCheckout requires sendTransfer({ resource, recipient, amount, currency, network }) and a server verifyTransfer hook.");
+    }
     return {
-      resource: item.resource,
-      container,
-      setRating,
-      rate
+      resource: normalized,
+      async pay(input = {}) {
+        const recipient = normalized.recipient || normalized.payTo;
+        const amount = String(normalized.price || normalized.amount || "0");
+        const currency = normalized.currency || "USDC";
+        const network = options.network || input.challenge?.accepts?.[0]?.network || "eip155:5042002";
+        const result = await sendTransfer({ resource: normalized, recipient, amount, currency, network, challenge: input.challenge });
+        const txHash = result?.txHash || result?.hash || result?.transactionHash || result?.paymentId || "";
+        if (!txHash) throw new Error("Transfer checkout did not return a txHash.");
+        return {
+          paymentSignature: txHash,
+          signature: txHash,
+          memo: result.memo || "",
+          metadata: {
+            paymentProvider: "direct-transfer",
+            paymentId: txHash,
+            txHash,
+            recipient,
+            amount: Number(amount),
+            currency,
+            network,
+            ...result.metadata || result
+          }
+        };
+      }
     };
   }
-  async function payAndUnlockResource(resource, options = {}) {
-    const item = createGate(resource, options.gateOptions || {});
-    const payPath = options.payPath || item.resource.payPath || "/api/nibgate/pay";
-    const status = typeof options.onStatus === "function" ? options.onStatus : () => {
-    };
-    status(options.paymentMessage || "Starting payment...");
-    item.unlockStarted({ source: options.source, paymentProvider: options.paymentProvider || "circle-gateway" });
-    const response = await fetch(payPath, {
-      method: options.payMethod || "POST",
+  async function payWithTransfer(resource, options = {}) {
+    const checkout = options.checkout || createTransferCheckout(resource, options).pay;
+    const result = await checkout({ resource: normalizeResource(resource), challenge: options.challenge || null });
+    const txHash = result?.metadata?.txHash || result?.txHash || result?.paymentSignature || result?.signature || "";
+    if (!txHash) throw new Error("Transfer checkout did not return a txHash.");
+    return checkResourceAccess(resource, {
+      ...options,
       headers: {
-        accept: "application/json",
-        "content-type": "application/json",
-        ...options.payHeaders || {}
+        ...options.headers || {},
+        "x-nibgate-transfer-tx": txHash
       },
-      body: JSON.stringify({
-        resource: item.resource,
-        ...options.payPayload || {}
-      })
+      payment: result.metadata || { paymentProvider: "direct-transfer", txHash, paymentId: txHash }
     });
-    const payload = await response.json().catch(() => ({}));
-    if (!response.ok || !payload.success) {
-      item.track("payment_failed", { source: options.source, status: response.status, error: payload.error || "Payment failed", detail: payload.detail || "" });
-      status(payload.detail || payload.error || options.paymentErrorMessage || "Payment failed.");
-      return { ok: false, status: response.status, payload, resource: item.resource, response };
-    }
-    const payment = payload.payment || {
-      paymentProvider: options.paymentProvider || "circle-gateway",
-      paymentId: payload.paymentId || `nibgate_payment_${Date.now()}`,
-      amount: Number(item.resource.price || 0),
-      revenue: Number(item.resource.price || 0),
-      currency: item.resource.currency || "USDC"
-    };
-    storePaymentProof(item.resource, payload.unlockProof);
-    item.markUnlocked(payment);
-    status(options.paymentSuccessMessage || "Payment verified. Content unlocked.");
-    return { ok: true, status: response.status, payload, payment, resource: item.resource, response };
   }
-  function setupResourcePage(resource, options = {}) {
-    const item = trackResourcePage(resource, options);
-    const win = browserWindow();
-    if (!win) return item;
-    const button = typeof options.button === "string" ? win.document.querySelector(options.button) : options.button;
-    const statusElement = typeof options.status === "string" ? win.document.querySelector(options.status) : options.status;
-    const setStatus = options.onStatus || ((message) => {
-      if (statusElement) statusElement.textContent = message || "";
-    });
-    if (button) {
-      button.addEventListener("click", async () => {
-        button.disabled = true;
-        try {
-          await checkResourceAccess(resource, { ...options, onStatus: setStatus });
-        } finally {
-          button.disabled = false;
-        }
-      });
-    }
-    return item;
-  }
+
+  // src/browser/client.js
   function createNibgate(defaults = {}) {
     const defaultResource = defaults.resource ? normalizeResource(defaults.resource) : null;
     function resourceWithDefaults(resource = {}) {
@@ -1217,9 +1282,51 @@
     };
   }
   var nibgate = createNibgate();
+  setDefaultClient(nibgate);
 
-  // client-nibgate.js
-  window.nibgateCheckout = createEvmGatewayUnlock;
-  window.nibgateRating = createOnchainRating;
-  window.nibgateMountRatingUI = mountRatingUI;
+  // src/core/settings.js
+  var NIBGATE_CONTENT_SETTING_FIELDS = [
+    { name: "publishToNibgate", label: "Publish to Nibgate discovery", type: "boolean", defaultValue: true },
+    { name: "type", label: "Content type", type: "select", options: CONTENT_TYPES, defaultValue: "article" },
+    { name: "humanAccess", label: "Human access", type: "select", options: ACCESS_MODES, defaultValue: "paid" },
+    { name: "agentAccess", label: "Agent access", type: "select", options: ACCESS_MODES, defaultValue: "paid" },
+    { name: "unlockMode", label: "Unlock mode", type: "select", options: UNLOCK_MODES, defaultValue: "one_time" },
+    { name: "paymentRail", label: "Payment rail", type: "select", options: PAYMENT_RAILS, defaultValue: "gateway" },
+    { name: "price", label: "Price", type: "text", defaultValue: "0.005" },
+    { name: "currency", label: "Currency", type: "text", defaultValue: "USDC" },
+    { name: "recipient", label: "Recipient wallet", type: "wallet", defaultValue: "" },
+    { name: "ratingsEnabled", label: "Enable ratings", type: "boolean", defaultValue: true },
+    { name: "license", label: "License / terms", type: "textarea", defaultValue: "" }
+  ];
+  function createNibgateContentSettings(input = {}) {
+    const access = normalizeAccessPolicy(input.access || {
+      humans: input.humanAccess,
+      agents: input.agentAccess
+    });
+    const unlock = normalizeUnlockPolicy(input.unlock || input.unlockMode || "one_time");
+    return {
+      publishToNibgate: input.publishToNibgate ?? input.publishedToNibgate ?? true,
+      type: normalizeContentType(input.type || input.contentType || "article"),
+      humanAccess: access.humans,
+      agentAccess: access.agents,
+      unlockMode: unlock.mode,
+      paymentRail: normalizePaymentRail(input.paymentRail || input.paymentMode || input.rail),
+      price: String(input.price ?? input.amount ?? "0.005"),
+      currency: input.currency || "USDC",
+      recipient: input.recipient || input.payTo || input.receiverAddress || input.creatorWallet || "",
+      ratingsEnabled: input.ratingsEnabled ?? input.enableRatings ?? input.reputation?.ratingsEnabled ?? true,
+      license: input.license || input.terms || ""
+    };
+  }
+  function settingsToAccessPolicy(settings = {}) {
+    return normalizeAccessPolicy({
+      humans: settings.humanAccess,
+      agents: settings.agentAccess
+    });
+  }
+  function settingsToUnlockPolicy(settings = {}) {
+    return normalizeUnlockPolicy(settings.unlockMode || settings.unlock || "one_time");
+  }
+  return __toCommonJS(index_exports);
 })();
+//# sourceMappingURL=nibgate.js.map
