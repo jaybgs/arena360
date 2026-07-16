@@ -89,6 +89,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const gateway = window.Nibgate.createEvmGatewayUnlock(
                     { 
                         id: article.id, 
+                        title: article.title,
+                        description: article.summary,
+                        imageUrl: new URL(article.image, window.location.origin).href,
+                        tags: [article.category, 'Sports'],
                         price: price,
                         currency: 'USDC'
                     },
