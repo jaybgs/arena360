@@ -81,7 +81,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Initialize the official Nibgate SDK Gateway
             if (window.nibgateCheckout) {
                 const gateway = window.nibgateCheckout(
-                    { id: article.id, price: price },
+                    { 
+                        id: article.id, 
+                        price: price,
+                        currency: 'USDC'
+                    },
                     { 
                         accessPath: '/api/nibgate/access?id=' + article.id,
                         circleClientModuleUrl: 'https://esm.sh/@circle-fin/x402-batching@3/client',
